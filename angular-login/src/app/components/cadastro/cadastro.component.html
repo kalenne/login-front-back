@@ -1,0 +1,24 @@
+<form [formGroup]="formGroup">
+<div class="col-12 flex align-content-center justify-content-center align-items-center">
+  <div class="card p-fluid w-7">
+    <div class="align-content-center justify-content-center align-items-center">
+      <h3 class="text-center">Cadastro</h3>
+    </div>
+    <div class="field grid mb-4">
+      <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Email</label>
+      <div class="col-12 md:col-10 ml-4">
+        <input pInputText type="text" formControlName="email" />
+      </div>
+    </div>
+    <div class="field grid">
+      <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Senha</label>
+      <div class="col-12 md:col-10 ml-4">
+        <input pInputText type="text" formControlName="senha" />
+      </div>
+    </div>
+    <div class="mb-2 mr-2" style="text-align: right ">
+      <button pButton pRipple  label="Enviar" (click)="salvarDados()" class="w-2 align-content-center"></button>
+    </div>
+  </div>
+</div>
+</form>
