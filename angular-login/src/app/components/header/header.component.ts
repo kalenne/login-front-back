@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, DoCheck {
     this.itens = [
       {
           label: 'Usuários',
-          icon: 'pi pi-fw pi-table',
+          icon: 'pi pi-fw pi-user',
           items: [
               {
                   label: 'Novo',
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, DoCheck {
               },
               {
                   label: 'Listar',
-                  icon: 'pi pi-fw pi-user-edit',
+                  icon: 'pi pi-fw pi-users ',
                   routerLink: '/dados'
               }
           ]
@@ -35,7 +35,6 @@ export class HeaderComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
-    console.log("vezes que checou");
     if(sessionStorage.getItem("logout") === 'Logout'){
       this.label = 'Logout';
     }
