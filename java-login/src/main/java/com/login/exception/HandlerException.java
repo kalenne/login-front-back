@@ -2,17 +2,15 @@ package com.login.exception;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.login.utils.FormatLocalDateTime;
 
-@ControllerAdvice
-public class HandlerException extends ResponseEntityExceptionHandler{
+public class HandlerException {
 	
 	@ExceptionHandler(NotFoundException.class)
 	public final ResponseEntity<ResponseException> handlerNotFound(NotFoundException nfe, WebRequest request){

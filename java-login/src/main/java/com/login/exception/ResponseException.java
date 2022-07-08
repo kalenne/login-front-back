@@ -13,4 +13,5 @@ public class ResponseException {
 		this.texto = texto;
 		this.detalhes = detalhes;
 	}
+
 }

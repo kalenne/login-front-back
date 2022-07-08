@@ -13,6 +13,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DadosComponent } from './pages/dados/dados.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,9 +31,10 @@ import { DadosComponent } from './pages/dados/dados.component';
     PrimengModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

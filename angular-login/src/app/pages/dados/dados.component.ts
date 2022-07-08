@@ -5,6 +5,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { getLocaleDateFormat } from '@angular/common';
 import { Data } from '@angular/router';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-dados',
@@ -26,7 +27,7 @@ export class DadosComponent implements OnInit {
     this.usuarioService.listarUsuarios().subscribe(data => this.usuarios = data);
   }
 
-  openPDF(): void {
+  exportPDF(): void {
     const dataAutal = new Date().toLocaleString();
     let DATA: any = document.getElementById('htmlData');
     html2canvas(DATA).then((canvas) => {
@@ -41,4 +42,6 @@ export class DadosComponent implements OnInit {
       PDF.save('lista-usuario.pdf');
     });
   }
+
 }
+

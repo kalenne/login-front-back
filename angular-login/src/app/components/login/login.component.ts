@@ -46,19 +46,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
-  displayBasic() {
+  routerDados() {
     this.router.navigate(['/dados']);
     let logout = 'Logout';
     sessionStorage.setItem('logout', logout);
   }
 
-  // atualizarSenha(){
-  //   let ref = this.dialogService.open(CadastroComponent, {
-  //     header: 'Esqueceu sua senha?',
-  //     width: '50%',
-  //     data: {
-  //       operacao: 'update'
-  //     }
-  // });
-  // }
+  atualizarSenha(){
+    let ref = this.dialogService.open(CadastroComponent, {
+      header: 'Esqueceu sua senha?',
+      width: '50%',
+      data: {
+        operacao: 'update'
+      }
+  });
+  }
 }

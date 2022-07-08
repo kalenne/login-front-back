@@ -13,7 +13,7 @@
     <div class="field grid">
       <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Senha</label>
       <div class="col-12 md:col-10 ml-4">
-        <input pInputText type="text" formControlName="senha" />
+        <p-password formControlName="senha" [toggleMask]="true"></p-password>
       </div>
     </div>
     <div class="mb-2 mr-2" style="text-align: right ">
@@ -21,4 +21,6 @@
     </div>
   </div>
 </div>
+<p-toast position="top-right" key="sucesso"></p-toast>
 </form>
+

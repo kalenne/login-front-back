@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class FormatLocalDateTime {
-	
 	private LocalDateTime localDate;
 	private String formatDateTime;
 	

@@ -14,7 +14,7 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
   public login (usuario: IUsuario){
-    // console.log(JSON.stringify(usuario))
+    console.log(JSON.stringify(usuario))
     return this.http.post(this.api, JSON.stringify(usuario), {responseType: 'text'});
   }
 }
