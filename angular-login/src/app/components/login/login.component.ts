@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public login() {
     this.loginService.login(this.usuario).subscribe((data) => {
+
       if (data) {
         let token = data;
         sessionStorage.setItem('token', token);
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
-  displayBasic() {
+  routerDados() {
     this.router.navigate(['/dados']);
     let logout = 'Logout';
     sessionStorage.setItem('logout', logout);

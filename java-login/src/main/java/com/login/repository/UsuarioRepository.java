@@ -9,5 +9,6 @@ import com.login.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-	Optional<Usuario> findByEmail(String email);
+	
+	public Optional<Usuario> findByEmail(String email);
 }

@@ -24,13 +24,14 @@ public class JWTValidarFilter extends BasicAuthenticationFilter {
 	public JWTValidarFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
 	}
-
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		
 		String atributo = request.getHeader(HEADER_ATRIBUTO);
 		
-		if (atributo == null) {
+		if(atributo == null) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -41,22 +42,24 @@ public class JWTValidarFilter extends BasicAuthenticationFilter {
 		}
 		
 		String token = atributo.replace(ATRIBUTO_PREFIXO, "");
+		UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
 		
-		UsernamePasswordAuthenticationToken authencToken = getAuthenticationToken(token);
-		
-		SecurityContextHolder.getContext().setAuthentication(authencToken);
-		
-
+		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		chain.doFilter(request, response);
 	}
 	
-	private UsernamePasswordAuthenticationToken getAuthenticationToken (String token) {
-		String usuario = JWT.require(Algorithm.HMAC512(JWTAutenticarFilter.TOKEN_SENHA)).build().verify(token).getSubject();
+	private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
+		String usuario = JWT.require(Algorithm.HMAC512(JWTAutenticarFilter.TOKEN_SENHA))
+				.build()
+				.verify(token)
+				.getSubject();
 		
-		if (usuario == null) {
+		if(usuario == null) {
 			return null;
 		}
-		return new UsernamePasswordAuthenticationToken(usuario, usuario, new ArrayList<>());
+		
+		return new UsernamePasswordAuthenticationToken(token, null, new ArrayList<>());
 	}
+	
 
 }

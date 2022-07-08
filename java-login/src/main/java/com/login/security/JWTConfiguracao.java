@@ -1,57 +1,53 @@
 package com.login.security;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.login.service.DetalheUsuarioServiceImpl;
+import com.login.service.DetalheUsuarioService;
 
-@Configuration
 @EnableWebSecurity
 public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
 	
-	private final DetalheUsuarioServiceImpl usuarioService;
+	private final DetalheUsuarioService usuarioService;
+	private final PasswordEncoder passwordEncoder;
 	
-	public JWTConfiguracao(DetalheUsuarioServiceImpl usuarioService) {
+	public JWTConfiguracao(DetalheUsuarioService usuarioService, PasswordEncoder passwordEncoder) {
 		this.usuarioService = usuarioService;
+		this.passwordEncoder = passwordEncoder;
 	}
-
-	@SuppressWarnings("deprecation")
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(usuarioService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+		auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder);
 	}
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {	
-		http.httpBasic().disable();	
-		http.csrf().disable().authorizeRequests()
-				.antMatchers(HttpMethod.PUT).permitAll()
-				.antMatchers(HttpMethod.POST, "/login").permitAll()
-				.and()
-				.addFilter(new JWTAutenticarFilter(authenticationManager()))
-				.addFilter(new JWTValidarFilter(authenticationManager()))
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeHttpRequests()
+			.antMatchers(HttpMethod.POST, "/login", "/api/usuario/salvar").permitAll()
+			.anyRequest().authenticated()
+			.and()
+			.addFilter(new JWTAutenticarFilter(authenticationManager()))
+			.addFilter(new JWTValidarFilter(authenticationManager()))
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
 	@Bean
-	CorsConfigurationSource corsConfigurationSource () {
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		
-		CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-		source.registerCorsConfiguration("/**", corsConfiguration);
-		return source;
-	}
+    CorsConfigurationSource corsConfigurationSource() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
+    }
 	
- 
 }

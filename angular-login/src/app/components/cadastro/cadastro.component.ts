@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IUsuario } from 'src/app/core/interface/usuario';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
@@ -13,7 +14,7 @@ export class CadastroComponent implements OnInit {
   formGroup: FormGroup;
   operacao: string = '';
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private ddc: DynamicDialogConfig) {
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private ddc: DynamicDialogConfig, private messageService: MessageService) {
     this.formGroup = this.fb.group({
       email: this.fb.control('', [Validators.required]),
       senha: this.fb.control('', [Validators.required]),
@@ -32,7 +33,15 @@ export class CadastroComponent implements OnInit {
     if (this.operacao === 'update') {
       this.usuarioService.atualizarSenha(request).subscribe();
     } else {
-      this.usuarioService.cadastrarUsuarios(request).subscribe();
+        this.usuarioService.cadastrarUsuarios(request).subscribe( data => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso!',
+            detail: 'Logado com Sucesso!',
+            key:'sucesso'
+          });
+        }
+      );
     }
   }
 

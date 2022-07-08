@@ -1,7 +1,5 @@
 package com.login.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,17 +10,19 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity(name = "usuario")
-public class Usuario implements Serializable {
+public class Usuario {
 	
-	private static final long serialVersionUID = 1L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+		
 	private String email;
 	
 	private String senha;
+	
+	
+	
+	
 	
 
 }

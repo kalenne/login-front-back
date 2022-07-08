@@ -12,8 +12,7 @@ export class UsuarioService {
   api = `${environment.api}/api/usuario`
 
   reqHeader:HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': `${sessionStorage.getItem("token")}`
+    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
   })
   constructor(private http: HttpClient) { }
 
@@ -22,10 +21,10 @@ export class UsuarioService {
   }
 
   cadastrarUsuarios(usuario: IUsuario):Observable<IUsuario>{
-    return this.http.post<IUsuario>(`${this.api}/salvar`, usuario, {headers: this.reqHeader});
+    return this.http.post<IUsuario>(`${this.api}/salvar`, usuario);
   }
 
   atualizarSenha(usuario: IUsuario){
-    return this.http.post<IUsuario>(`${this.api}/trocarsenha`, usuario, {headers: this.reqHeader});
+    return this.http.post<IUsuario>(`${this.api}/trocarsenha`, usuario);
   }
 }

@@ -12,23 +12,21 @@ import com.login.model.Usuario;
 import com.login.repository.UsuarioRepository;
 
 @Component
-public class DetalheUsuarioServiceImpl implements UserDetailsService {
+public class DetalheUsuarioService implements UserDetailsService{
 	
-	private final UsuarioRepository repository;
+	private final UsuarioRepository usuRepository;
 	
-	public DetalheUsuarioServiceImpl (UsuarioRepository repository) {
-		this.repository = repository;
+	public DetalheUsuarioService(UsuarioRepository usuRepository) {
+		this.usuRepository = usuRepository;
 	}
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Usuario> usuario = repository.findByEmail(username);
-		
-		if(usuario.isEmpty()) {
-			throw new UsernameNotFoundException("Usuário [" + username + "] não encontrado!");
+		Optional<Usuario> usuario = usuRepository.findByEmail(username);
+		if (usuario.isEmpty()) {
+			throw new UsernameNotFoundException("Usuario [" + username + "] nao encontrado" );
 		}
 		
 		return new DetalheUsuarioData(usuario);
-		
 	}
 }
