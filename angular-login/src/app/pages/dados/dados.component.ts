@@ -18,7 +18,9 @@ export class DadosComponent implements OnInit {
   constructor(private usuarioService:UsuarioService) { }
 
   ngOnInit(): void {
-    this.listarUsuarios();
+    if(sessionStorage.getItem("token")){
+      this.listarUsuarios();
+    }
   }
 
   listarUsuarios(){

@@ -22,6 +22,7 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.operacao = this.ddc.data.operacao;
   }
 
   salvarDados(): void {
@@ -31,19 +32,24 @@ export class CadastroComponent implements OnInit {
     };
 
     if (this.operacao === 'update') {
-      this.usuarioService.atualizarSenha(request).subscribe();
+      console.log(this.operacao)
+      this.usuarioService.atualizarSenha(request).subscribe( data => {
+        this.dialogSucesso();
+        console.log(request);
+      });
+
     } else {
-        this.usuarioService.cadastrarUsuarios(request).subscribe( data => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso!',
-            detail: 'Logado com Sucesso!',
-            key:'sucesso'
-          });
-        }
-      );
+        // this.usuarioService.cadastrarUsuarios(request).subscribe( data => this.dialogSucesso());
     }
   }
 
+dialogSucesso (){
+  this.messageService.add({
+    severity: 'success',
+    summary: 'Sucesso!',
+    detail: 'Tudo certo!',
+    key:'sucesso'
+  });
+}
 
 }

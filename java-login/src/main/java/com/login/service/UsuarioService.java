@@ -16,12 +16,9 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuRepo;
 
-	
 	 public UsuarioService(UsuarioRepository repository) {
-	
-			 this.usuRepo = repository;
-		
-	    }
+		 this.usuRepo = repository;
+	 }
 		
 	public List<Usuario> listaUsuarios () throws NotFoundException{
 		 try {

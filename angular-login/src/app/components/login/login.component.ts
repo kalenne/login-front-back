@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public login() {
     this.loginService.login(this.usuario).subscribe((data) => {
-
       if (data) {
         let token = data;
         sessionStorage.setItem('token', token);
@@ -53,13 +52,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     sessionStorage.setItem('logout', logout);
   }
 
-  // atualizarSenha(){
-  //   let ref = this.dialogService.open(CadastroComponent, {
-  //     header: 'Esqueceu sua senha?',
-  //     width: '50%',
-  //     data: {
-  //       operacao: 'update'
-  //     }
-  // });
-  // }
+  atualizarSenha(){
+    let ref = this.dialogService.open(CadastroComponent, {
+      header: 'Esqueceu sua senha?',
+      width: '50%',
+      data: {
+        operacao: 'update'
+      }
+  });
+  }
 }

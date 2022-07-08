@@ -17,7 +17,7 @@
                           <p-checkbox styleClass="mr-2"></p-checkbox>
                           <label>Lembre-me</label>
                       </div>
-                      <a class="font-medium no-underline ml-2 text-right cursor-pointer"  style="color: var(--primary-color)">Esqueceu a senha?</a>
+                      <a class="font-medium no-underline ml-2 text-right cursor-pointer" (click)="atualizarSenha()" style="color: var(--primary-color)">Esqueceu a senha?</a>
                   </div>
                   <button pButton pRipple label="Entrar" (click)="login()" class="w-full p-3 text-xl"></button>
               </div>

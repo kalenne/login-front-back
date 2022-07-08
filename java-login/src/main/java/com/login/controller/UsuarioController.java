@@ -60,5 +60,14 @@ public class UsuarioController {
 		HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
 		return ResponseEntity.status(status).body(valid);
 	}
-
+	
+	@PostMapping("/trocarsenha")
+	public ResponseEntity<Optional<Usuario>> atualizarSenha (@RequestBody Usuario usuario) throws Exception{
+		usuario.setSenha(encoder.encode(usuario.getSenha()));
+		Optional<Usuario> usu = usuServ.atualizarSenha(usuario);
+		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.OK);
+		
+	}
+	
+	
 }
