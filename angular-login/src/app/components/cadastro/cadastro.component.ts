@@ -31,15 +31,14 @@ export class CadastroComponent implements OnInit {
       ... valor,
     };
 
-    if (this.operacao === 'update') {
+    if (this.operacao == 'update') {
       console.log(this.operacao)
       this.usuarioService.atualizarSenha(request).subscribe( data => {
         this.dialogSucesso();
         console.log(request);
       });
-
     } else {
-        // this.usuarioService.cadastrarUsuarios(request).subscribe( data => this.dialogSucesso());
+        this.usuarioService.cadastrarUsuarios(request).subscribe( data => this.dialogSucesso());
     }
   }
 

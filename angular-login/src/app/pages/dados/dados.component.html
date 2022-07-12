@@ -1,4 +1,4 @@
-<p-table [value]="usuarios" responsiveLayout="scroll" id="htmlData">
+<p-table [value]="usuarios" responsiveLayout="scroll" id="htmlData" #htmlData>
   <ng-template pTemplate="caption">
     <div class="flex table-header">
         <div class="col-4 p-0"></div>
@@ -17,8 +17,8 @@
   </ng-template>
   <ng-template pTemplate="body" let-usuario>
       <tr>
-          <td>{{usuario.id}}</td>
-          <td>{{usuario.email}}</td>
+          <td>{{usuario.id }}</td>
+          <td>{{usuario.email }}</td>
           <td>{{usuario.senha}}</td>
       </tr>
   </ng-template>
