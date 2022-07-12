@@ -35,12 +35,7 @@ public class JWTValidarFilter extends BasicAuthenticationFilter {
 			chain.doFilter(request, response);
 			return;
 		}
-		
-		if (!atributo.startsWith(ATRIBUTO_PREFIXO)) {
-			chain.doFilter(request, response);
-			return;
-		}
-		
+				
 		String token = atributo.replace(ATRIBUTO_PREFIXO, "");
 		UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
 		

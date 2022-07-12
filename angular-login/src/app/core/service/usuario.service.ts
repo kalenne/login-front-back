@@ -12,7 +12,7 @@ export class UsuarioService {
   api = `${environment.api}/api/usuario`
 
   reqHeader:HttpHeaders = new HttpHeaders({
-    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+    'Authorization': `${sessionStorage.getItem("token")}`
   })
   constructor(private http: HttpClient) { }
 

@@ -47,9 +47,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   routerDados() {
-    this.router.navigate(['/dados']);
-    let logout = 'Logout';
-    sessionStorage.setItem('logout', logout);
+    if (sessionStorage.getItem('token')) {
+      this.router.navigate(['/dados']);
+      let logout = 'Logout';
+      sessionStorage.setItem('logout', logout);
+    }
   }
 
   atualizarSenha(){

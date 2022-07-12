@@ -14,6 +14,7 @@ import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import {DialogService, DynamicDialogConfig, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {MenubarModule} from 'primeng/menubar';
+import {FileUploadModule} from 'primeng/fileupload';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {MenubarModule} from 'primeng/menubar';
     TableModule,
     DialogModule,
     DynamicDialogModule,
-    MenubarModule
+    MenubarModule,
+    FileUploadModule
   ],
   providers: [
     MessageService,

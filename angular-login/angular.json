@@ -34,7 +34,9 @@
               "node_modules/primeflex/primeflex.css"
 
             ],
-            "scripts": []
+            "scripts": [
+
+            ]
           },
           "configurations": {
             "production": {
