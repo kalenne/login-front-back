@@ -1,13 +1,9 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IUsuario } from 'src/app/core/interface/usuario';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import { getLocaleDateFormat } from '@angular/common';
-import { Data } from '@angular/router';
-import * as FileSaver from 'file-saver';
 import 'jspdf-autotable';
-import autoTable from 'jspdf-autotable';
+import { DocpdfService } from 'src/app/core/service/docpdf.service';
+import { MessageService } from 'primeng/api';
+import { IUsuario } from 'src/app/core/interface/usuario';
 
 
 @Component({
@@ -20,8 +16,9 @@ export class DadosComponent implements OnInit {
   usuarios: any[] = [];
 
   columns:any[] = [];
+  loading: boolean = true;
 
-  constructor(private usuarioService:UsuarioService) {
+  constructor(private usuarioService:UsuarioService, private docpdf: DocpdfService, private messageService: MessageService) {
     this.columns = [
       {title: 'id', dataKey: 'id'},
       {title: 'Email', dataKey: 'email'},
@@ -36,38 +33,35 @@ export class DadosComponent implements OnInit {
   }
 
   listarUsuarios(){
-    this.usuarioService.listarUsuarios().subscribe(data => this.usuarios = data);
+    let id = sessionStorage.getItem('usuario');
+    this.usuarioService.listarUsuarios(Number(id)).subscribe(data => {
+      console.log(data)
+    this.usuarios = data;
+    });
+  }
+  exportPDF(){
+    window.print();
   }
 
-  // exportPDF(): void {
-  //   const dataAutal = new Date().toLocaleString();
-  //   let DATA: any = document.getElementById('htmlData');
-  //   html2canvas(DATA).then((canvas) => {
-  //     let fileWidth = 210;
-  //     let fileHeight = (canvas.height * fileWidth) / canvas.width;
-  //     const FILEURI = canvas.toDataURL('image/png');
-  //     let PDF = new jsPDF('p', 'mm', 'a4');
-  //     let position = 10;
-  //     PDF.setFontSize(8);
-  //     PDF.text(`PDF gerado em ${dataAutal} `, 4, position-3);
-  //     PDF.addImage(FILEURI, 'PNG', 2, position, fileWidth, fileHeight)
-  //     PDF.save('lista-usuario.pdf');
+
+  // exportPDF(){
+  //   let pdf = new jsPDF('p', 'pt');
+
+  //   autoTable(pdf, {
+  //     columns: this.columns,
+  //     body: this.usuarios,
+  //     didDrawPage: (dataArg) => {
+  //       pdf.text('Usuarios', dataArg.settings.margin.left, 10);
+  //     }
   //   });
+  //   pdf.save('usuario.pdf');
   // }
 
-  exportPDF(){
-    let pdf = new jsPDF('p', 'pt');
-
-    let table;
-    autoTable(pdf, {
-      columns: this.columns,
-      body: this.usuarios,
-      didDrawPage: (dataArg) => {
-        pdf.text('Usuarios', dataArg.settings.margin.left, 10);
-      }
-    });
-    pdf.save('usuario.pdf');
-
+  uploadPdf(event: any) {
+    for(let file of event.files) {
+      this.docpdf.uploadPdf(file).subscribe()
+    }
+    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
   }
 }
 

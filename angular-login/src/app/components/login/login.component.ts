@@ -32,6 +32,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       if (data) {
         let token = data;
         sessionStorage.setItem('token', token);
+        this.usuarioService.usuarioLogado(this.usuario).subscribe(usuario => {
+          sessionStorage.setItem('usuario', `${usuario.id}`);
+        });
         this.messageService.add({
           severity: 'success',
           summary: 'Sucesso!',

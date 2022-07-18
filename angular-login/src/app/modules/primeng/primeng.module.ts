@@ -15,6 +15,7 @@ import {DialogModule} from 'primeng/dialog';
 import {DialogService, DynamicDialogConfig, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {MenubarModule} from 'primeng/menubar';
 import {FileUploadModule} from 'primeng/fileupload';
+import {SkeletonModule} from 'primeng/skeleton';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     DialogModule,
     DynamicDialogModule,
     MenubarModule,
-    FileUploadModule
+    FileUploadModule,
+    SkeletonModule
   ],
   providers: [
     MessageService,

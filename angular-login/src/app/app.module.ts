@@ -12,7 +12,8 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DadosComponent } from './pages/dados/dados.component';
-
+import { PasswordfilterPipe } from './core/pipes/passwordfilter.pipe';
+import { UploadDadosComponent } from './pages/upload-dados/upload-dados.component';
 
 
 @NgModule({
@@ -22,7 +23,9 @@ import { DadosComponent } from './pages/dados/dados.component';
     LoginComponent,
     CadastroComponent,
     HeaderComponent,
-    DadosComponent
+    DadosComponent,
+    PasswordfilterPipe,
+    UploadDadosComponent
   ],
   imports: [
     BrowserModule,

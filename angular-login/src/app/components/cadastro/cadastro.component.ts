@@ -30,12 +30,11 @@ export class CadastroComponent implements OnInit {
     const request: IUsuario = {
       ... valor,
     };
-
+    console.log(request);
     if (this.operacao == 'update') {
       console.log(this.operacao)
       this.usuarioService.atualizarSenha(request).subscribe( data => {
         this.dialogSucesso();
-        console.log(request);
       });
     } else {
         this.usuarioService.cadastrarUsuarios(request).subscribe( data => this.dialogSucesso());

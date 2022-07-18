@@ -28,6 +28,11 @@ export class HeaderComponent implements OnInit, DoCheck {
                   label: 'Listar',
                   icon: 'pi pi-fw pi-users ',
                   routerLink: '/dados'
+              },
+              {
+                  label: 'Arquivos',
+                  icon: 'pi pi-fw pi-folder ',
+                  routerLink: '/uploadDados'
               }
           ]
       },

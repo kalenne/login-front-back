@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, retryWhen, mergeMap, retry } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUsuario } from '../interface/usuario';
 
@@ -16,15 +17,23 @@ export class UsuarioService {
   })
   constructor(private http: HttpClient) { }
 
-  listarUsuarios() {
-    return this.http.get<IUsuario[]>(`${this.api}/listar`, {headers: this.reqHeader});
+  listarUsuarios(id: number) {
+    return this.http.get<any>(`${this.api}/admin/listar/${id}`, {headers: this.reqHeader}).pipe(
+      delay(2000),
+      retry(3),
+    );
   }
+
 
   cadastrarUsuarios(usuario: IUsuario):Observable<IUsuario>{
     return this.http.post<IUsuario>(`${this.api}/salvar`, usuario);
   }
 
   atualizarSenha(usuario: IUsuario){
-    return this.http.post<IUsuario>(`${this.api}/trocarsenha`, usuario);
+    return this.http.post<IUsuario>(`${this.api}/editar`, usuario);
+  }
+
+  usuarioLogado(usuario: IUsuario) {
+    return this.http.post<IUsuario>(`${this.api}/logado`, usuario);
   }
 }
