@@ -16,25 +16,6 @@ export class HeaderComponent implements OnInit, DoCheck {
   ngOnInit(): void {
     this.itens = [
       {
-          label: 'Usuários',
-          icon: 'pi pi-fw pi-user',
-          items: [
-              {
-                  label: 'Novo',
-                  icon: 'pi pi-fw pi-plus',
-                  routerLink: '/cadastrar'
-              },
-              {
-                  label: 'Listar',
-                  icon: 'pi pi-fw pi-users ',
-                  routerLink: '/usuario/perfil'
-              },
-              {
-                  label: 'Arquivos',
-                  icon: 'pi pi-fw pi-folder ',
-                  routerLink: '/uploadDados'
-              }
-          ]
       },
     ];
   }

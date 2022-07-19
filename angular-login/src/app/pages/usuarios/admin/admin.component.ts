@@ -65,12 +65,14 @@ export class AdminComponent implements OnInit {
     this.usuarioService.deletarUsuario(id).subscribe(data => this.listarUsuarios());
   }
 
-  cadastroModal(){
+  dadosModal(operacao: string, usuario?: IUsuario){
     let ref = this.dialogService.open(CadastroComponent, {
-      header: 'Cadastro',
-      width: '50%',
+      header: operacao === 'create' ? 'Cadastro' : "Editar Informações",
+      width: '60%',
       data: {
-        operacao: 'admin'
+        operacao: operacao,
+        admin: 'admin',
+        usuario: usuario
       }
   });
   }

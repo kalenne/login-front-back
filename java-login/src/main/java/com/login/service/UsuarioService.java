@@ -59,7 +59,9 @@ public class UsuarioService {
 		return usuRepo.findByEmail(email.getEmail())
 				.map(dados -> {
 					dados.setSenha(email.getSenha());
-					dados.setRoles(email.getRoles());
+					if(email.getRoles() == null) {
+						dados.setRoles(UserRoles.USER);
+					}					
 					return usuRepo.save(dados);
 				});
 	}

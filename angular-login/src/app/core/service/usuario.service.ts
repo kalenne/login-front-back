@@ -24,13 +24,12 @@ export class UsuarioService {
     );
   }
 
-
   cadastrarUsuarios(usuario: IUsuario):Observable<IUsuario>{
     return this.http.post<IUsuario>(`${this.api}/salvar`, usuario);
   }
 
-  atualizarSenha(usuario: IUsuario){
-    return this.http.post<IUsuario>(`${this.api}/editar`, usuario);
+  editar(usuario: IUsuario){
+    return this.http.put<IUsuario>(`${this.api}/editar`, usuario);
   }
 
   usuarioLogado(usuario: IUsuario) {

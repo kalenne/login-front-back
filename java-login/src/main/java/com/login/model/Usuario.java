@@ -2,6 +2,7 @@ package com.login.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,4 +28,10 @@ public class Usuario implements Serializable {
 	private String senha;
 	
 	private UserRoles roles;
+	
+	private String nome;
+	
+	private String datanasc;
+	
+	@Column(length = 11) private String cpf;
 }

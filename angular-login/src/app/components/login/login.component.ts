@@ -6,6 +6,7 @@ import { IUsuario } from 'src/app/core/interface/usuario';
 import { LoginService } from 'src/app/core/service/login.service';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { CadastroComponent } from '../cadastro/cadastro.component';
+import { ResetLoginComponent } from '../reset-login/reset-login.component';
 
 @Component({
   selector: 'app-login',
@@ -66,26 +67,25 @@ export class  LoginComponent implements OnInit, OnDestroy {
       }
       let logout = 'Logout';
       sessionStorage.setItem('logout', logout);
-
     }
   }
 
-  atualizarSenha(){
+  dadosUsuario(operacao: string){
     let ref = this.dialogService.open(CadastroComponent, {
-      header: 'Esqueceu sua senha?',
-      width: '50%',
+      header: 'Cadastrar',
+      width: '55%',
       data: {
-        operacao: 'update'
+        operacao: operacao
       }
   });
   }
 
-  cadastrarUsuario(){
-    let ref = this.dialogService.open(CadastroComponent, {
-      header: 'Cadastrar',
-      width: '50%',
+  resetUsuario(operacao: string){
+    let ref = this.dialogService.open(ResetLoginComponent, {
+      header: 'Esqueceu sua conta?',
+      width: '55%',
       data: {
-        operacao: 'create'
+        operacao: operacao
       }
   });
   }

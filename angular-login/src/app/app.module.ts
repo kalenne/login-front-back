@@ -15,6 +15,8 @@ import { PasswordfilterPipe } from './core/pipes/passwordfilter.pipe';
 import { UploadDadosComponent } from './pages/upload-dados/upload-dados.component';
 import { PerfilComponent } from './pages/usuarios/perfil/perfil.component';
 import { AdminComponent } from './pages/usuarios/admin/admin.component';
+import { CpfPipe } from './core/pipes/cpf.pipe';
+import { ResetLoginComponent } from './components/reset-login/reset-login.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { AdminComponent } from './pages/usuarios/admin/admin.component';
     PasswordfilterPipe,
     UploadDadosComponent,
     PerfilComponent,
-    AdminComponent
+    AdminComponent,
+    CpfPipe,
+    ResetLoginComponent
   ],
   imports: [
     BrowserModule,

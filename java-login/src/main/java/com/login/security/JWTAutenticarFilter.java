@@ -61,6 +61,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 				.sign(Algorithm.HMAC512(TOKEN_SENHA));
 		
 		response.addHeader("Access-Control-Allow-Origin", "**");
+		response.addHeader("Authorization", JWTValidarFilter.ATRIBUTO_PREFIXO + token);
 		response.getWriter().write(token);
 		response.getWriter().flush();
 	}

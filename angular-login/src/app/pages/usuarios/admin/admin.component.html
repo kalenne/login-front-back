@@ -2,7 +2,7 @@
   <ng-template  pTemplate="caption">
     <div class="flex table-header">
         <div class="col-4 p-0">
-          <button pButton pRipple type="button" icon="pi pi-plus" (click)="cadastroModal()" class="p-button-rounded p-button-text"></button>
+          <button pButton pRipple type="button" icon="pi pi-plus" (click)="dadosModal('create')" class="p-button-rounded p-button-text"></button>
         </div>
         <div class="col-4 text-center p-0">Lista de Usuários</div>
         <div class=" col-4 text-right p-0">
@@ -24,6 +24,7 @@
           <td>{{ usuario.email }}</td>
           <td>{{ usuario.roles }}</td>
           <td>
+            <button pButton pRipple type="button" icon="pi pi-pencil" (click)="dadosModal('update', this.usuario)" class="p-button-rounded p-button-warning p-button-text"></button>
             <button pButton pRipple type="button" icon="pi pi-times" (click)="deletarUsuario(usuario.id)" class="p-button-rounded p-button-danger p-button-text"></button>
           </td>
       </tr>

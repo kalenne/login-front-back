@@ -1,6 +1,29 @@
 <form [formGroup]="formGroup">
   <div class="card p-fluid">
     <div class="field grid mb-4">
+      <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Nome</label>
+      <div class="col-12 md:col-10 ml-4">
+        <input pInputText type="text" formControlName="nome" />
+      </div>
+    </div>
+    <div class="field grid mb-4">
+      <label class="col-12 mb-2 ml-4 ">Data de Nascimento</label>
+      <div class="col-12 md:col-10 ml-4">
+        <p-inputMask
+          mask="99/99/9999"
+          placeholder="dd/mm/aaaa"
+          slotChar="dd/mm/aaaa"
+          formControlName="datanasc"
+        ></p-inputMask>
+      </div>
+    </div>
+    <div class="field grid mb-4">
+      <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">CPF</label>
+      <div class="col-12 md:col-10 ml-4">
+        <input type="text" pInputText formControlName="cpf" maxlength="11" />
+      </div>
+    </div>
+    <div class="field grid mb-4">
       <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Email</label>
       <div class="col-12 md:col-10 ml-4">
         <input pInputText type="text" formControlName="email" />
@@ -12,7 +35,7 @@
         <p-password formControlName="senha" ></p-password>
       </div>
     </div>
-    <div *ngIf="operacao == 'admin'" class="field grid">
+    <div *ngIf="admin == 'admin'" class="field grid">
       <label class="col-12 mb-2 ml-4">Tipo de Usuario</label>
 
       <div class="col-12 md:col-10 ml-4">
@@ -25,4 +48,8 @@
   </div>
 <p-toast position="top-right" key="sucesso"></p-toast>
 </form>
-
+<p-dialog header="Erro" [(visible)]="cpfdialog" [style]="{ width: '15vw' }">
+  <div class="flex justify-content-center">
+    <p>CPF Inválido!</p>
+  </div>
+</p-dialog>

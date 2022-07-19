@@ -18,6 +18,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {SkeletonModule} from 'primeng/skeleton';
 import {DropdownModule} from 'primeng/dropdown';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {InputMaskModule} from 'primeng/inputmask';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     FileUploadModule,
     SkeletonModule,
     DropdownModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    InputMaskModule
   ],
   providers: [
     MessageService,
