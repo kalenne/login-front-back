@@ -12,8 +12,9 @@ import { CadastroComponent } from '../cadastro/cadastro.component';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class  LoginComponent implements OnInit, OnDestroy {
   usuario = {} as IUsuario;
+
   constructor(
     private usuarioService: UsuarioService,
     private loginService: LoginService,
@@ -28,18 +29,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   public login() {
+
     this.loginService.login(this.usuario).subscribe((data) => {
       if (data) {
         let token = data;
         sessionStorage.setItem('token', token);
+
         this.usuarioService.usuarioLogado(this.usuario).subscribe(usuario => {
+          this.usuario = usuario;
           sessionStorage.setItem('usuario', `${usuario.id}`);
         });
+
         this.messageService.add({
           severity: 'success',
           summary: 'Sucesso!',
           detail: 'Logado com Sucesso!',
         });
+
         this.display = true;
       }
     },
@@ -51,9 +57,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   routerDados() {
     if (sessionStorage.getItem('token')) {
-      this.router.navigate(['/dados']);
+
+      if(this.usuario.roles === 'ADMIN') {
+        this.router.navigate(['/usuario/admin']);
+      }
+      if (this.usuario.roles === 'USER'){
+        this.router.navigate(['/usuario/usuario']);
+      }
       let logout = 'Logout';
       sessionStorage.setItem('logout', logout);
+
     }
   }
 
@@ -63,6 +76,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       width: '50%',
       data: {
         operacao: 'update'
+      }
+  });
+  }
+
+  cadastrarUsuario(){
+    let ref = this.dialogService.open(CadastroComponent, {
+      header: 'Cadastrar',
+      width: '50%',
+      data: {
+        operacao: 'create'
       }
   });
   }

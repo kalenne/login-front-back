@@ -77,4 +77,8 @@ public class UsuarioService {
 			throw new Exception("Usuario invalido para a operacao");
 		}
 	}
+	
+	public UserRoles[] roles () {
+		return UserRoles.values();
+	}
 }

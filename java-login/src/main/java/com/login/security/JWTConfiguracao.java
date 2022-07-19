@@ -1,5 +1,7 @@
 package com.login.security;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -34,6 +36,7 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeHttpRequests()
 			.antMatchers(HttpMethod.POST, "/login", "/api/usuario/salvar", "/api/usuario/logado").permitAll()
+			.antMatchers(HttpMethod.GET, "/api/usuario/roles").permitAll()
 			.antMatchers(HttpMethod.PUT, "/api/usuario/trocarsenha").permitAll()
 			.anyRequest().authenticated()
 			.and()
@@ -45,8 +48,9 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
 	@Bean
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
+       
         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }

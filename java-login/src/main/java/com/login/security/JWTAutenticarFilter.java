@@ -60,7 +60,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 				.withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRACAO))
 				.sign(Algorithm.HMAC512(TOKEN_SENHA));
 		
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "**");
 		response.getWriter().write(token);
 		response.getWriter().flush();
 	}

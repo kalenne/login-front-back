@@ -9,13 +9,15 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 import {DividerModule} from 'primeng/divider';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {ToastModule} from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import {DialogService, DynamicDialogConfig, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {MenubarModule} from 'primeng/menubar';
 import {FileUploadModule} from 'primeng/fileupload';
 import {SkeletonModule} from 'primeng/skeleton';
+import {DropdownModule} from 'primeng/dropdown';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -38,12 +40,15 @@ import {SkeletonModule} from 'primeng/skeleton';
     DynamicDialogModule,
     MenubarModule,
     FileUploadModule,
-    SkeletonModule
+    SkeletonModule,
+    DropdownModule,
+    ConfirmDialogModule
   ],
   providers: [
     MessageService,
     DialogService,
-    DynamicDialogConfig
+    DynamicDialogConfig,
+    ConfirmationService
   ]
 })
 export class PrimengModule { }

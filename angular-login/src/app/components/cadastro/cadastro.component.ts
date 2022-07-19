@@ -14,29 +14,38 @@ export class CadastroComponent implements OnInit {
   formGroup: FormGroup;
   operacao: string = '';
 
+  roles = [];
+
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private ddc: DynamicDialogConfig, private messageService: MessageService) {
     this.formGroup = this.fb.group({
       email: this.fb.control('', [Validators.required]),
       senha: this.fb.control('', [Validators.required]),
+      roles: this.fb.control(null)
     });
   }
 
   ngOnInit(): void {
     this.operacao = this.ddc.data.operacao;
+    this.getRoles()
+  }
+
+  getRoles(){
+    this.usuarioService.roles().subscribe(data => {
+      this.roles = data
+    })
   }
 
   salvarDados(): void {
     const valor = this.formGroup.value;
     const request: IUsuario = {
-      ... valor,
+      ... valor
     };
-    console.log(request);
     if (this.operacao == 'update') {
       console.log(this.operacao)
       this.usuarioService.atualizarSenha(request).subscribe( data => {
         this.dialogSucesso();
       });
-    } else {
+    } else if( this.operacao == 'create') {
         this.usuarioService.cadastrarUsuarios(request).subscribe( data => this.dialogSucesso());
     }
   }

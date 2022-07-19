@@ -3,8 +3,10 @@ package com.login.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.login.model.Usuario;
 import com.login.service.UsuarioService;
+import com.login.utils.UserRoles;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -36,6 +39,12 @@ public class UsuarioController {
 	public ResponseEntity<Optional<Object>> listarUsuarios(@PathVariable(value = "id") Integer id) {
 		Optional<Object> usu = usuServ.listaUsuarios(id);
 		return new ResponseEntity<Optional<Object>>(usu, HttpStatus.OK);
+	}
+	
+	@GetMapping("/roles")
+	public ResponseEntity<UserRoles[]> roles (){
+		UserRoles[] roles = usuServ.roles();
+		return new ResponseEntity<UserRoles[]>(roles, HttpStatus.OK);
 	}
 	
 	@PostMapping("/logado")
@@ -58,7 +67,7 @@ public class UsuarioController {
 		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/admin/excluir/{id}")
+	@DeleteMapping(value="/excluir/{id}")
 	public void deleteUsuario(@PathVariable Integer id) throws Exception{
 		usuServ.delete(id);
 	}

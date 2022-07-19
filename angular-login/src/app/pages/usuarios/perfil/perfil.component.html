@@ -1,0 +1,14 @@
+<p-card header="Bem vindo!" subheader="Seus dados" [style]="{width: 'width'}" styleClass="styleClass">
+  <div class="grid mt-2">
+    <div class="col-6">Usuario: {{ usuario.email }}</div>
+    <div class="col-6"> Senha: {{ usuario.senha | passwordfilter}}</div>
+  </div>
+  <p-footer>
+    Tipo do perfil: {{ usuario.roles }}
+  </p-footer>
+</p-card>
+<div>
+  <button pButton pRipple type="button" label="Excluir" class="p-button-outlined p-button-danger mt-2" (click)="dialogExclusao(usuario.id)"></button>
+</div>
+<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+

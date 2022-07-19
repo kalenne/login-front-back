@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, DoCheck {
               {
                   label: 'Listar',
                   icon: 'pi pi-fw pi-users ',
-                  routerLink: '/dados'
+                  routerLink: '/usuario/perfil'
               },
               {
                   label: 'Arquivos',

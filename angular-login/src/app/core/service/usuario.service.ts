@@ -19,7 +19,7 @@ export class UsuarioService {
 
   listarUsuarios(id: number) {
     return this.http.get<any>(`${this.api}/admin/listar/${id}`, {headers: this.reqHeader}).pipe(
-      delay(2000),
+      delay(3000),
       retry(3),
     );
   }
@@ -35,5 +35,13 @@ export class UsuarioService {
 
   usuarioLogado(usuario: IUsuario) {
     return this.http.post<IUsuario>(`${this.api}/logado`, usuario);
+  }
+
+  deletarUsuario(id: number) {
+    return this.http.delete(`${this.api}/excluir/${id}`, {headers: this.reqHeader});
+  }
+
+  roles(){
+    return this.http.get<any>(`${this.api}/roles`);
   }
 }
