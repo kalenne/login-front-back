@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DocpdfService } from './docpdf.service';
+import { InterceptorService } from './interceptor.service';
 
-describe('DocpdfService', () => {
-  let service: DocpdfService;
+describe('InterceptorService', () => {
+  let service: InterceptorService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DocpdfService);
+    service = TestBed.inject(InterceptorService);
   });
 
   it('should be created', () => {

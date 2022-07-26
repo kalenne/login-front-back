@@ -17,6 +17,8 @@ import { PerfilComponent } from './pages/usuarios/perfil/perfil.component';
 import { AdminComponent } from './pages/usuarios/admin/admin.component';
 import { CpfPipe } from './core/pipes/cpf.pipe';
 import { ResetLoginComponent } from './components/reset-login/reset-login.component';
+import { InterceptorModule } from './modules/interceptor/interceptor.module';
+import { NgxLoadingModule } from "ngx-loading";
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { ResetLoginComponent } from './components/reset-login/reset-login.compon
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    InterceptorModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [
   ],

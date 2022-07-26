@@ -21,12 +21,13 @@
       <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">CPF</label>
       <div class="col-12 md:col-10 ml-4">
         <input type="text" pInputText formControlName="cpf" maxlength="11" />
+        <small *ngIf="cpfdialog" id="username-help" class="p-error">CPF Inválido</small>
       </div>
     </div>
     <div class="field grid mb-4">
       <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Email</label>
       <div class="col-12 md:col-10 ml-4">
-        <input pInputText type="text" formControlName="email" />
+        <input pInputText type="text" aria-describedby="email-help" formControlName="email" />
       </div>
     </div>
     <div class="field grid">
@@ -48,8 +49,4 @@
   </div>
 <p-toast position="top-right" key="sucesso"></p-toast>
 </form>
-<p-dialog header="Erro" [(visible)]="cpfdialog" [style]="{ width: '15vw' }">
-  <div class="flex justify-content-center">
-    <p>CPF Inválido!</p>
-  </div>
-</p-dialog>
+

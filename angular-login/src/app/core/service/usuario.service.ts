@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, retryWhen, mergeMap, retry } from 'rxjs/operators';
+import { delay, retry } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUsuario } from '../interface/usuario';
@@ -12,16 +12,10 @@ export class UsuarioService {
 
   api = `${environment.api}/api/usuario`
 
-  reqHeader:HttpHeaders = new HttpHeaders({
-    'Authorization': `${sessionStorage.getItem("token")}`
-  })
   constructor(private http: HttpClient) { }
 
   listarUsuarios(id: number) {
-    return this.http.get<any>(`${this.api}/admin/listar/${id}`, {headers: this.reqHeader}).pipe(
-      delay(3000),
-      retry(3),
-    );
+    return this.http.get<any>(`${this.api}/admin/listar/${id}`);
   }
 
   cadastrarUsuarios(usuario: IUsuario):Observable<IUsuario>{
@@ -37,7 +31,7 @@ export class UsuarioService {
   }
 
   deletarUsuario(id: number) {
-    return this.http.delete(`${this.api}/excluir/${id}`, {headers: this.reqHeader});
+    return this.http.delete(`${this.api}/excluir/${id}`);
   }
 
   roles(){
