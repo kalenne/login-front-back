@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DadosComponent } from './dados.component';
+import { ResetLoginComponent } from './reset-login.component';
 
-describe('DadosComponent', () => {
-  let component: DadosComponent;
-  let fixture: ComponentFixture<DadosComponent>;
+describe('ResetLoginComponent', () => {
+  let component: ResetLoginComponent;
+  let fixture: ComponentFixture<ResetLoginComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DadosComponent ]
+      declarations: [ ResetLoginComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DadosComponent);
+    fixture = TestBed.createComponent(ResetLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

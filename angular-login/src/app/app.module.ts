@@ -11,8 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DadosComponent } from './pages/dados/dados.component';
-
+import { PasswordfilterPipe } from './core/pipes/passwordfilter.pipe';
+import { UploadDadosComponent } from './pages/upload-dados/upload-dados.component';
+import { PerfilComponent } from './pages/usuarios/perfil/perfil.component';
+import { AdminComponent } from './pages/usuarios/admin/admin.component';
+import { CpfPipe } from './core/pipes/cpf.pipe';
+import { ResetLoginComponent } from './components/reset-login/reset-login.component';
 
 
 @NgModule({
@@ -22,7 +26,12 @@ import { DadosComponent } from './pages/dados/dados.component';
     LoginComponent,
     CadastroComponent,
     HeaderComponent,
-    DadosComponent
+    PasswordfilterPipe,
+    UploadDadosComponent,
+    PerfilComponent,
+    AdminComponent,
+    CpfPipe,
+    ResetLoginComponent
   ],
   imports: [
     BrowserModule,

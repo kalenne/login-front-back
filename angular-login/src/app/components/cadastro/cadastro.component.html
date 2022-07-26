@@ -1,8 +1,27 @@
 <form [formGroup]="formGroup">
-<div class="col-12 flex align-content-center justify-content-center align-items-center">
-  <div class="card p-fluid w-6">
-    <div class="align-content-center justify-content-center align-items-center">
-      <h3 class="text-center">Informações</h3>
+  <div class="card p-fluid">
+    <div class="field grid mb-4">
+      <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Nome</label>
+      <div class="col-12 md:col-10 ml-4">
+        <input pInputText type="text" formControlName="nome" />
+      </div>
+    </div>
+    <div class="field grid mb-4">
+      <label class="col-12 mb-2 ml-4 ">Data de Nascimento</label>
+      <div class="col-12 md:col-10 ml-4">
+        <p-inputMask
+          mask="99/99/9999"
+          placeholder="dd/mm/aaaa"
+          slotChar="dd/mm/aaaa"
+          formControlName="datanasc"
+        ></p-inputMask>
+      </div>
+    </div>
+    <div class="field grid mb-4">
+      <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">CPF</label>
+      <div class="col-12 md:col-10 ml-4">
+        <input type="text" pInputText formControlName="cpf" maxlength="11" />
+      </div>
     </div>
     <div class="field grid mb-4">
       <label class="col-12 mb-2 ml-4 md:col-2 md:mb-0">Email</label>
@@ -16,11 +35,21 @@
         <p-password formControlName="senha" ></p-password>
       </div>
     </div>
+    <div *ngIf="admin == 'admin'" class="field grid">
+      <label class="col-12 mb-2 ml-4">Tipo de Usuario</label>
+
+      <div class="col-12 md:col-10 ml-4">
+        <p-dropdown [options]="roles" formControlName="roles" placeholder="Selecione"></p-dropdown>
+      </div>
+    </div>
     <div class="mb-2 mr-2" style="text-align: right ">
       <button pButton pRipple  label="Enviar" (click)="salvarDados()" class="w-2 align-content-center"></button>
     </div>
   </div>
-</div>
 <p-toast position="top-right" key="sucesso"></p-toast>
 </form>
-
+<p-dialog header="Erro" [(visible)]="cpfdialog" [style]="{ width: '15vw' }">
+  <div class="flex justify-content-center">
+    <p>CPF Inválido!</p>
+  </div>
+</p-dialog>
