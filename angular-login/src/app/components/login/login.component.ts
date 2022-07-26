@@ -16,6 +16,8 @@ import { ResetLoginComponent } from '../reset-login/reset-login.component';
 export class  LoginComponent implements OnInit, OnDestroy {
   usuario = {} as IUsuario;
 
+  loading = false;
+
   constructor(
     private usuarioService: UsuarioService,
     private loginService: LoginService,
@@ -30,27 +32,24 @@ export class  LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   public login() {
-
+    this.loading = true;
     this.loginService.login(this.usuario).subscribe((data) => {
       if (data) {
+        this.loading = false;
         let token = data;
         sessionStorage.setItem('token', token);
 
         this.usuarioService.usuarioLogado(this.usuario).subscribe(usuario => {
           this.usuario = usuario;
           sessionStorage.setItem('usuario', `${usuario.id}`);
+          this.routerDados();
         });
 
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso!',
-          detail: 'Logado com Sucesso!',
-        });
 
-        this.display = true;
       }
     },
     err => {
+      this.loading = false;
       this.messageService.add({severity:'error', summary: 'Error', detail: 'Usuário Inválido!', key: 'error'});
     }
     );
@@ -58,7 +57,6 @@ export class  LoginComponent implements OnInit, OnDestroy {
 
   routerDados() {
     if (sessionStorage.getItem('token')) {
-
       if(this.usuario.roles === 'ADMIN') {
         this.router.navigate(['/usuario/admin']);
       }

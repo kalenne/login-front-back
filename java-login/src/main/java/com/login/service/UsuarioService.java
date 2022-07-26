@@ -58,6 +58,9 @@ public class UsuarioService {
 	public Optional<Usuario> editarUsuario(Usuario email)  throws Exception {
 		return usuRepo.findByEmail(email.getEmail())
 				.map(dados -> {
+					dados.setCpf(email.getCpf());
+					dados.setDatanasc(email.getDatanasc());
+					dados.setNome(email.getNome());
 					dados.setSenha(email.getSenha());
 					if(email.getRoles() == null) {
 						dados.setRoles(UserRoles.USER);

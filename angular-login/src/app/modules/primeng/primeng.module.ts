@@ -19,6 +19,8 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {DropdownModule} from 'primeng/dropdown';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {InputMaskModule} from 'primeng/inputmask';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import {InputMaskModule} from 'primeng/inputmask';
     SkeletonModule,
     DropdownModule,
     ConfirmDialogModule,
-    InputMaskModule
+    InputMaskModule,
+    MessagesModule,
+    MessageModule
   ],
   providers: [
     MessageService,

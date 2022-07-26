@@ -18,9 +18,8 @@ export class PerfilComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, private router: Router, private confirmationService: ConfirmationService , private dialogService: DialogService ){ }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('token')){
       this.listarUsuarios();
-    }
+
   }
 
   listarUsuarios(){
@@ -33,7 +32,7 @@ export class PerfilComponent implements OnInit {
   dialogExclusao(id: number) {
     console.log(this.usuario)
     this.confirmationService.confirm({
-        message: 'Deseja confirmar?',
+        message: 'Deseja confirmar a exclusão do Usuário ?',
         accept: () => {
             this.excluirUsuario(id);
         }
@@ -53,5 +52,7 @@ export class PerfilComponent implements OnInit {
         usuario: usuario
       }
   });
+
+  ref.onDestroy.subscribe(dados => this.listarUsuarios());
   }
 }
