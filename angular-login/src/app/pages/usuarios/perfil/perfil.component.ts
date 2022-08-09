@@ -24,7 +24,7 @@ export class PerfilComponent implements OnInit {
 
   listarUsuarios(){
     let id = sessionStorage.getItem('usuario');
-    this.usuarioService.listarUsuarios(Number(id)).subscribe(data => {
+    this.usuarioService.listarUsuarios(Number(id)).subscribe((data:any) => {
       this.usuario = data;
     });
   }

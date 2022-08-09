@@ -8,7 +8,7 @@ import { AdminComponent } from './pages/usuarios/admin/admin.component';
 import { PerfilComponent } from './pages/usuarios/perfil/perfil.component';
 
 const routes: Routes = [
-  {path: '', component:LoginComponent },
+  {path: '', component:HomeComponent},
   {path: 'login', component:LoginComponent},
   {path: 'cadastrar', component:CadastroComponent},
   {path:'uploadDados', component: UploadDadosComponent},

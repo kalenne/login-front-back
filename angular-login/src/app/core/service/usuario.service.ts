@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, retry } from 'rxjs/operators';
+import { delay, map, retry } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUsuario } from '../interface/usuario';
@@ -18,20 +18,29 @@ export class UsuarioService {
     return this.http.get<any>(`${this.api}/admin/listar/${id}`);
   }
 
-  cadastrarUsuarios(usuario: IUsuario):Observable<IUsuario>{
-    return this.http.post<IUsuario>(`${this.api}/salvar`, usuario);
+  listaRestaurar(id: number){
+    return this.http.get<any>(`${this.api}/admin/restaurar/${id}`);
   }
 
-  editar(usuario: IUsuario){
-    return this.http.put<IUsuario>(`${this.api}/editar`, usuario);
+  cadastrarUsuarios(usuario: IUsuario){
+    console.log (usuario);
+    return this.http.post<IUsuario>(`${this.api}/salvar`, usuario, {observe: 'response' as 'body'});
   }
 
   usuarioLogado(usuario: IUsuario) {
     return this.http.post<IUsuario>(`${this.api}/logado`, usuario);
   }
 
+  editar(usuario: IUsuario){
+    return this.http.put<IUsuario>(`${this.api}/editar`, usuario, {observe: 'response'});
+  }
+
   deletarUsuario(id: number) {
-    return this.http.delete(`${this.api}/excluir/${id}`);
+    return this.http.put(`${this.api}/excluir`, id, {observe: 'response'});
+  }
+
+  restaurarUsuario(id: number){
+    return this.http.put(`${this.api}/restaurar`, id, {observe: 'response'});
   }
 
   roles(){

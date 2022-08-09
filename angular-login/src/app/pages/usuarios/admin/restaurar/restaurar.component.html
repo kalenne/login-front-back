@@ -1,0 +1,20 @@
+<p-table [value]="usuarios" responsiveLayout="scroll" id="htmlData" #htmlData>
+  <ng-template pTemplate="header">
+      <tr>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Tipo</th>
+          <th>Opções</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-usuario>
+      <tr>
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.roles }}</td>
+          <td>
+            <button pButton pRipple type="button" icon="pi pi-arrow-up" (click)="dadosModal(usuario.id)" class="p-button-rounded p-button-warning p-button-text"></button>
+          </td>
+      </tr>
+  </ng-template>
+</p-table>

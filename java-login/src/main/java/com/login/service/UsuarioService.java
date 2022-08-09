@@ -32,23 +32,45 @@ public class UsuarioService {
 	 public Optional<Object> listaUsuarios (Integer id) throws NotFoundException{
 		 try {
 			 return usuRepo.findById(id).map(dados -> {
-				 if(dados.getRoles() == UserRoles.ADMIN) {
-					 return usuRepo.findAll();
-				 } else {
+				 if(dados.getRoles() == UserRoles.ADMIN && dados.isAtivo() == true) {
+					 return usuRepo.findByAtivoTrue();
+				 } else if (dados.isAtivo() == true) {
 					 return dados;
+				 } else {
+					 return null;
 				 }
 			 });
 			
 		 } catch (NotFoundException nfe) {
 			 throw new NotFoundException("Usuario nao encontrado.");
 		 }
-	}
+	 }
+	 
+	 public Optional<Object> restaurarUsuarios(Integer id) throws NotFoundException {
+		 try {
+			 return usuRepo.findById(id).map(dados -> {
+				 if(dados.getRoles() == UserRoles.ADMIN) {
+					 return usuRepo.findByAtivoFalse();
+				 } 	else {
+					 return null;
+				 }
+				
+			 });
+			
+		 } catch (NotFoundException nfe) {
+			 throw new NotFoundException("Usuario nao encontrado.");
+		 }
+			 
+	 }
+	
 	
 	public Usuario salvarUsuarios(Usuario usuario) throws Exception {
 		try {			
 			if(usuario.getRoles() == null) {
 				usuario.setRoles(UserRoles.USER);
 			}
+			
+			usuario.setAtivo(true);
 			return usuRepo.save(usuario);
 		} catch (Exception e) {
 			throw new Exception("Erro ao salvar o usuario.");
@@ -64,20 +86,45 @@ public class UsuarioService {
 					dados.setSenha(email.getSenha());
 					if(email.getRoles() == null) {
 						dados.setRoles(UserRoles.USER);
-					}					
+					} else {
+						dados.setRoles(email.getRoles());
+					}
+					
 					return usuRepo.save(dados);
 				});
+	}
+	
+	public Optional<Usuario> resetUsuario(Usuario email)  throws Exception {
+		return usuRepo.findByEmail(email.getEmail()).map(data -> {
+			data.setSenha(email.getSenha());
+			return data;
+		});
 	}
 	
 	public Optional<Usuario> findEmail (String email){
 		return usuRepo.findByEmail(email);
 	}
 	
-	public void delete (Integer id) throws Exception {
+	public Optional<Usuario> delete (Integer id) throws Exception {
 		
 		try {
-			usuRepo.deleteById(id);;
+			return usuRepo.findById(id).map(dados -> {
+				dados.setAtivo(false);
+				return usuRepo.save(dados);
+			});
 			
+		} catch (Exception e) {
+			throw new Exception("Usuario invalido para a operacao");
+		}
+		
+	}
+	
+	public Optional<Usuario> restaurar(Integer id) throws Exception {
+		try {
+			return usuRepo.findById(id).map(dados -> {
+				dados.setAtivo(true);
+				return usuRepo.save(dados);
+			});
 		} catch (Exception e) {
 			throw new Exception("Usuario invalido para a operacao");
 		}

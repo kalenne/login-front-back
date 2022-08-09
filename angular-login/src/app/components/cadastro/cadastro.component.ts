@@ -20,12 +20,12 @@ export class CadastroComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private ddc: DynamicDialogConfig, private messageService: MessageService, private ref: DynamicDialogRef) {
     this.formGroup = this.fb.group({
-      email: this.fb.control('', [Validators.required]),
-      senha: this.fb.control('', [Validators.required]),
+      email: this.fb.control(null, [Validators.required]),
+      senha: this.fb.control(null, [Validators.required]),
       roles: this.fb.control(null),
-      nome: this.fb.control(''),
-      datanasc: this.fb.control(''),
-      cpf: this.fb.control('')
+      nome: this.fb.control(null, [Validators.required]),
+      datanasc: this.fb.control(null, [Validators.required]),
+      cpf: this.fb.control(null, [Validators.required])
     });
   }
 
@@ -59,12 +59,12 @@ export class CadastroComponent implements OnInit {
       if (this.operacao == 'update' && valor.senha != null) {
         this.usuarioService.editar(request).subscribe( data => {
           this.dialogSucesso();
-          this.ref.destroy();
+          this.ref.close(data);
         });
       } else if( this.operacao == 'create') {
           this.usuarioService.cadastrarUsuarios(request).subscribe( data => {
             this.dialogSucesso();
-            this.ref.destroy();
+            this.ref.close(data);
           });
       }
     } else {
