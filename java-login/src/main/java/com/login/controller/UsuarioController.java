@@ -76,10 +76,16 @@ public class UsuarioController {
 		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.ACCEPTED);
 	}
 	
-	
 	@PutMapping(value="/excluir")
 	public ResponseEntity<Optional<Usuario>> deleteUsuario(@RequestBody Integer id) throws Exception{
 		Optional<Usuario> usu = usuServ.delete(id);
+		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping(value="/resetsenha")
+	public ResponseEntity<Optional<Usuario>> resetSenha(@RequestBody Usuario usuario) throws Exception {
+		usuario.setSenha(encoder.encode(usuario.getSenha()));
+		Optional<Usuario> usu = usuServ.resetUsuario(usuario);
 		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.ACCEPTED);
 	}
 	

@@ -26,10 +26,10 @@ export class MessageComponent implements OnInit {
       this.messageService.add({severity:'success', summary: 'Sucesso', detail: `${this.dados.tipo} realizada com Sucesso!`, key: 'info'});
     }
     else if (this.dados.code >=400 && this.dados.code <=499){
-      this.messageService.add({severity:'warning', summary: 'Alerta', detail: `${this.dados.tipo}: Dados em falta.`});
+      this.messageService.add({severity:'warning', summary: 'Alerta', detail: `${this.dados.tipo}: Dados em falta.`, key: 'info'});
     }
     else if (this.dados.code>=500 && this.dados.code<=599){
-        this.messageService.add({severity:'error', summary: 'Error', detail: `Erro ao realizar a ${this.dados.tipo}!`});
+        this.messageService.add({severity:'error', summary: 'Error', detail: `Erro ao realizar a ${this.dados.tipo}, por favor verifique novamente!`, key: 'info'});
     }
   }
 }

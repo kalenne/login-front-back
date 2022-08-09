@@ -24,7 +24,7 @@ export class UsuarioService {
 
   cadastrarUsuarios(usuario: IUsuario){
     console.log (usuario);
-    return this.http.post<IUsuario>(`${this.api}/salvar`, usuario, {observe: 'response' as 'body'});
+    return this.http.post<IUsuario>(`${this.api}/salvar`, usuario, {observe: 'response'});
   }
 
   usuarioLogado(usuario: IUsuario) {
@@ -45,5 +45,9 @@ export class UsuarioService {
 
   roles(){
     return this.http.get<any>(`${this.api}/roles`);
+  }
+
+  resetSenha(usuario: IUsuario) {
+    return this.http.put<IUsuario>(`${this.api}/resetsenha`, usuario, {observe:'response'});
   }
 }

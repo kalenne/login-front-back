@@ -7,6 +7,7 @@ import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { Informacao, InformacaoService } from 'src/app/core/service/message.service';
 import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { RestaurarComponent } from './restaurar/restaurar.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -19,11 +20,14 @@ export class AdminComponent implements OnInit {
   columns: any[] = [];
   loading: boolean = true;
 
+  searchText: string = '';
+
   constructor(
     private usuarioService: UsuarioService,
     private dialogService: DialogService,
     private confirmationService: ConfirmationService,
-    private message: InformacaoService
+    private message: InformacaoService,
+    private router: Router
   ) {
     this.columns = [
       { title: 'id', dataKey: 'id' },
@@ -40,6 +44,8 @@ export class AdminComponent implements OnInit {
     let id = sessionStorage.getItem('usuario');
     this.usuarioService.listarUsuarios(Number(id)).subscribe((data) => {
       this.usuarios = data;
+    }, (err) => {
+      this.router.navigate(['/login']);
     });
   }
 
@@ -70,7 +76,6 @@ export class AdminComponent implements OnInit {
     });
     ref.onClose.subscribe((data) => {
       if(data){
-        console.log(`dentro do ref close: ${data}`)
         this.listarUsuarios();
         this.message.setData(this.dadosToast(data.status, data.statusText, header));
       }

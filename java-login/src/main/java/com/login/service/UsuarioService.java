@@ -97,7 +97,7 @@ public class UsuarioService {
 	public Optional<Usuario> resetUsuario(Usuario email)  throws Exception {
 		return usuRepo.findByEmail(email.getEmail()).map(data -> {
 			data.setSenha(email.getSenha());
-			return data;
+			return usuRepo.save(data);
 		});
 	}
 	

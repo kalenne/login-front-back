@@ -22,6 +22,7 @@ import { NgxLoadingModule } from "ngx-loading";
 import { MessageComponent } from './components/message/message.component';
 import { InformacaoService } from './core/service/message.service';
 import { RestaurarComponent } from './pages/usuarios/admin/restaurar/restaurar.component';
+import { SearchfilterPipe } from './core/pipes/searchfilter.pipe';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { RestaurarComponent } from './pages/usuarios/admin/restaurar/restaurar.c
     ResetLoginComponent,
     MessageComponent,
     RestaurarComponent,
+    SearchfilterPipe,
   ],
   imports: [
     BrowserModule,
