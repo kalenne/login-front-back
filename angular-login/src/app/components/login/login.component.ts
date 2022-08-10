@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { IUsuario } from 'src/app/core/interface/usuario';
+import { HidenavbarService } from 'src/app/core/service/hidenavbar.service';
 import { LoginService } from 'src/app/core/service/login.service';
 import {
   Informacao,
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private router: Router,
     public dialogService: DialogService,
-    private message: InformacaoService
+    private message: InformacaoService,
+    private navbar: HidenavbarService
   ) {}
   display = false;
 
@@ -54,6 +56,8 @@ export class LoginComponent implements OnInit, OnDestroy {
               sessionStorage.setItem('usuario', `${usuario.id}`);
               this.routerDados();
             });
+
+            this.navbar.setLoginStatus();
         }
       },
       (err) => {
