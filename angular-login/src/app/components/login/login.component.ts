@@ -4,6 +4,10 @@ import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { IUsuario } from 'src/app/core/interface/usuario';
 import { LoginService } from 'src/app/core/service/login.service';
+import {
+  Informacao,
+  InformacaoService,
+} from 'src/app/core/service/message.service';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { CadastroComponent } from '../cadastro/cadastro.component';
 import { ResetLoginComponent } from '../reset-login/reset-login.component';
@@ -13,7 +17,7 @@ import { ResetLoginComponent } from '../reset-login/reset-login.component';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class  LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   usuario = {} as IUsuario;
 
   loading = false;
@@ -23,44 +27,58 @@ export class  LoginComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private messageService: MessageService,
     private router: Router,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private message: InformacaoService,
   ) {}
   display = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    sessionStorage.clear();
+  }
 
   ngOnDestroy(): void {}
 
   public login() {
     this.loading = true;
-    this.loginService.login(this.usuario).subscribe((data) => {
-      if (data) {
+    this.loginService.login(this.usuario).toPromise().then(
+      (data) => {
+        if (data) {
+          this.loading = false;
+          let token = data;
+          sessionStorage.setItem('token', token);
+
+          this.usuarioService
+            .usuarioLogado(this.usuario)
+            .toPromise().then(usuario => {
+              if(usuario?.ativo) {
+                this.usuario = usuario;
+                sessionStorage.setItem('usuario', `${usuario.id}`);
+                this.routerDados();
+              } else {
+                this.message.setData(this.dadosToast());
+              }
+            });
+        }
+      },
+      (err) => {
         this.loading = false;
-        let token = data;
-        sessionStorage.setItem('token', token);
-
-        this.usuarioService.usuarioLogado(this.usuario).subscribe(usuario => {
-          this.usuario = usuario;
-          sessionStorage.setItem('usuario', `${usuario.id}`);
-          this.routerDados();
+        this.message.setData(this.dadosToast(err.status, err.statusText, 'Erro ao entrar'))
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Usuário Inválido!',
+          key: 'error',
         });
-
-
       }
-    },
-    err => {
-      this.loading = false;
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Usuário Inválido!', key: 'error'});
-    }
     );
   }
 
   routerDados() {
     if (sessionStorage.getItem('token')) {
-      if(this.usuario.roles === 'ADMIN') {
+      if (this.usuario.roles === 'ADMIN') {
         this.router.navigate(['/usuario/admin']);
       }
-      if (this.usuario.roles === 'USER'){
+      if (this.usuario.roles === 'USER') {
         this.router.navigate(['/usuario/usuario']);
       }
       let logout = 'Logout';
@@ -68,23 +86,40 @@ export class  LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  dadosUsuario(operacao: string){
+  dadosToast(code?: number, codeText?: string, tipo?: string): Informacao {
+    const info = { code, codeText, tipo } as Informacao;
+    return info;
+  }
+
+  dadosUsuario(operacao: string) {
     let ref = this.dialogService.open(CadastroComponent, {
       header: 'Cadastrar',
       width: '55%',
       data: {
-        operacao: operacao
-      }
-  });
+        operacao: operacao,
+      },
+    });
+
+    ref.onClose.subscribe((data) => {
+      this.message.setData(
+        this.dadosToast(data.status, data.statusText, 'Cadastro')
+      );
+    });
   }
 
-  resetUsuario(operacao: string){
+  resetUsuario(operacao: string) {
     let ref = this.dialogService.open(ResetLoginComponent, {
       header: 'Esqueceu sua conta?',
       width: '55%',
       data: {
-        operacao: operacao
-      }
-  });
+        operacao: operacao,
+      },
+    });
+
+    ref.onClose.subscribe((data) => {
+      this.message.setData(
+        this.dadosToast(data.status, data.statusText, 'Atualização')
+      );
+    });
   }
 }

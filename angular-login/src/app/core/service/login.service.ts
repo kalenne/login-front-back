@@ -16,7 +16,6 @@ export class LoginService {
 
   public login (usuario: IUsuario){
     return this.http.post(this.api, JSON.stringify(usuario), {responseType: 'text'}).pipe(
-      retry(2)
     );
   }
 }

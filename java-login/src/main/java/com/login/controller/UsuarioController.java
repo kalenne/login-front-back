@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +38,12 @@ public class UsuarioController {
 		return new ResponseEntity<Optional<Object>>(usu, HttpStatus.OK);
 	}
 	
+	@GetMapping("/admin/restaurar/{id}")
+	public ResponseEntity<Optional<Object>> restaurarUsuarios(@PathVariable(value = "id") Integer id) {
+		Optional<Object> usu = usuServ.restaurarUsuarios(id);
+		return new ResponseEntity<Optional<Object>>(usu, HttpStatus.OK);
+	}
+	
 	@GetMapping("/roles")
 	public ResponseEntity<UserRoles[]> roles (){
 		UserRoles[] roles = usuServ.roles();
@@ -65,9 +70,23 @@ public class UsuarioController {
 		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/excluir/{id}")
-	public void deleteUsuario(@PathVariable Integer id) throws Exception{
-		usuServ.delete(id);
+	@PutMapping("/restaurar")
+	public ResponseEntity<Optional<Usuario>> restaurar (@RequestBody Integer id) throws Exception{
+		Optional<Usuario> usu = usuServ.restaurar(id);
+		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping(value="/excluir")
+	public ResponseEntity<Optional<Usuario>> deleteUsuario(@RequestBody Integer id) throws Exception{
+		Optional<Usuario> usu = usuServ.delete(id);
+		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping(value="/resetsenha")
+	public ResponseEntity<Optional<Usuario>> resetSenha(@RequestBody Usuario usuario) throws Exception {
+		usuario.setSenha(encoder.encode(usuario.getSenha()));
+		Optional<Usuario> usu = usuServ.resetUsuario(usuario);
+		return new ResponseEntity<Optional<Usuario>>(usu, HttpStatus.ACCEPTED);
 	}
 	
 }

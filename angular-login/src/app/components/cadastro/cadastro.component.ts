@@ -5,11 +5,13 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IUsuario } from 'src/app/core/interface/usuario';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { cpf } from 'cpf-cnpj-validator';
+import { Informacao, InformacaoService } from 'src/app/core/service/message.service';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css']
+  styleUrls: ['./cadastro.component.css'],
 })
 export class CadastroComponent implements OnInit {
   formGroup: FormGroup;
@@ -18,35 +20,42 @@ export class CadastroComponent implements OnInit {
   cpfdialog = false;
   roles = [];
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private ddc: DynamicDialogConfig, private messageService: MessageService, private ref: DynamicDialogRef) {
+  constructor(
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService,
+    private ddc: DynamicDialogConfig,
+    private messageService: MessageService,
+    private ref: DynamicDialogRef,
+    private message: InformacaoService
+  ) {
     this.formGroup = this.fb.group({
-      email: this.fb.control('', [Validators.required]),
-      senha: this.fb.control('', [Validators.required]),
+      email: this.fb.control(null, [Validators.required]),
+      senha: this.fb.control(null, [Validators.required]),
       roles: this.fb.control(null),
-      nome: this.fb.control(''),
-      datanasc: this.fb.control(''),
-      cpf: this.fb.control('')
+      nome: this.fb.control(null, [Validators.required]),
+      datanasc: this.fb.control(null, [Validators.required]),
+      cpf: this.fb.control(null, [Validators.required]),
     });
   }
 
   ngOnInit(): void {
     this.operacao = this.ddc.data.operacao;
     this.admin = this.ddc.data.admin;
-    this.getRoles()
+    this.getRoles();
 
     if (this.operacao === 'update') {
       this.editarUsuario();
     }
   }
 
-  getRoles(){
-    this.usuarioService.roles().subscribe(data => {
-      this.roles = data
-    })
+  getRoles() {
+    this.usuarioService.roles().subscribe((data) => {
+      this.roles = data;
+    });
   }
 
-  dialogcpf(): Boolean{
-    return this.cpfdialog = true;
+  dialogcpf(): Boolean {
+    return (this.cpfdialog = true);
   }
 
   salvarDados(): void {
@@ -54,39 +63,44 @@ export class CadastroComponent implements OnInit {
 
     if (cpf.isValid(valor.cpf)) {
       const request: IUsuario = {
-        ... valor
+        ...valor,
       };
-      if (this.operacao == 'update' && valor.senha != null) {
-        this.usuarioService.editar(request).subscribe( data => {
-          this.dialogSucesso();
-          this.ref.destroy();
+
+      let header = this.operacao === 'create' ? 'Criação' : 'Edição';
+
+      if (this.operacao == 'update') {
+        this.usuarioService.editar(request).subscribe((data) => {
+          this.ref.close(data);
+        }, (err) => {
+          this.message.setData(this.dadosToast(err.status, err.statusText, header ))
         });
-      } else if( this.operacao == 'create') {
-          this.usuarioService.cadastrarUsuarios(request).subscribe( data => {
-            this.dialogSucesso();
-            this.ref.destroy();
-          });
+      } else if (this.operacao == 'create') {
+        this.usuarioService.cadastrarUsuarios(request).subscribe(
+          (data) => {
+            this.ref.close(data);
+          },
+          (err) => {
+            this.message.setData(this.dadosToast(err.status, err.statusText, header ))
+          }
+        );
       }
     } else {
       this.dialogcpf();
     }
   }
 
-dialogSucesso (){
-  this.messageService.add({
-    severity: 'success',
-    summary: 'Sucesso!',
-    detail: 'Tudo certo!',
-    key:'sucesso'
-  });
-}
 
-editarUsuario(){
-  this.formGroup.get('email')?.patchValue(this.ddc.data.usuario.email);
-  this.formGroup.get('roles')?.patchValue(this.ddc.data.usuario.roles);
-  this.formGroup.get('nome')?.patchValue(this.ddc.data.usuario.nome);
-  this.formGroup.get('datanasc')?.patchValue(this.ddc.data.usuario.datanasc);
-  this.formGroup.get('cpf')?.patchValue(this.ddc.data.usuario.cpf);
-}
+  editarUsuario() {
+    this.formGroup.get('email')?.patchValue(this.ddc.data.usuario.email);
+    this.formGroup.get('roles')?.patchValue(this.ddc.data.usuario.roles);
+    this.formGroup.get('nome')?.patchValue(this.ddc.data.usuario.nome);
+    this.formGroup.get('datanasc')?.patchValue(this.ddc.data.usuario.datanasc);
+    this.formGroup.get('cpf')?.patchValue(this.ddc.data.usuario.cpf);
 
+  }
+
+  dadosToast(code: number, codeText:string, tipo: string): Informacao {
+    const info = {code, codeText, tipo} as Informacao;
+    return info;
+  }
 }

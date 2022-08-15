@@ -3,3 +3,7 @@
   background-color: rgba(211, 210, 210, 0.035);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.124);
 }
+
+form {
+  overflow: hidden;
+}

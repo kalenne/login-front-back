@@ -19,7 +19,10 @@ import { CpfPipe } from './core/pipes/cpf.pipe';
 import { ResetLoginComponent } from './components/reset-login/reset-login.component';
 import { InterceptorModule } from './modules/interceptor/interceptor.module';
 import { NgxLoadingModule } from "ngx-loading";
-
+import { MessageComponent } from './components/message/message.component';
+import { InformacaoService } from './core/service/message.service';
+import { RestaurarComponent } from './pages/usuarios/admin/restaurar/restaurar.component';
+import { SearchfilterPipe } from './core/pipes/searchfilter.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { NgxLoadingModule } from "ngx-loading";
     PerfilComponent,
     AdminComponent,
     CpfPipe,
-    ResetLoginComponent
+    ResetLoginComponent,
+    MessageComponent,
+    RestaurarComponent,
+    SearchfilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +53,7 @@ import { NgxLoadingModule } from "ngx-loading";
     NgxLoadingModule.forRoot({})
   ],
   providers: [
+    InformacaoService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "expiracao",
+    "type": "java.lang.String",
+    "description": "A description for 'expiracao'"
+  },
+  {
+    "name": "header_atributo",
+    "type": "java.lang.String",
+    "description": "A description for 'header_atributo'"
+  }
+]}
