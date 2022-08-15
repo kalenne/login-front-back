@@ -89,14 +89,6 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  dialogSucesso() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Sucesso!',
-      detail: 'Tudo certo!',
-      key: 'sucesso',
-    });
-  }
 
   editarUsuario() {
     this.formGroup.get('email')?.patchValue(this.ddc.data.usuario.email);

@@ -20,11 +20,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.login.data.DetalheUsuarioData;
 import com.login.model.Usuario;
+import com.login.utils.Constantes;
 
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 	
-	public static final int TOKEN_EXPIRACAO = 900_000;
-	public static final String TOKEN_SENHA = "6609ebd3-b3a8-45d7-a5b6-15ec122c8b25";
 	
 	private final AuthenticationManager authenticationManager;
 
@@ -57,8 +56,8 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 		DetalheUsuarioData usuarioData = (DetalheUsuarioData) authResult.getPrincipal();
 		
 		String token = JWT.create().withSubject(usuarioData.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRACAO))
-				.sign(Algorithm.HMAC512(TOKEN_SENHA));
+				.withExpiresAt(new Date(System.currentTimeMillis() + Constantes.TOKEN_EXPIRACAO))
+				.sign(Algorithm.HMAC512(Constantes.TOKEN_SENHA));
 		
 		response.addHeader("Access-Control-Allow-Origin", "**");
 		response.getWriter().write(token);

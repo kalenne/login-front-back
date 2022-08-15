@@ -1,21 +1,21 @@
-<div>
+<div class="justify-content-center flex align-content-center align-items-center">
   <button pButton pRipple type="button" (click)="editarUsuario(usuario)" label="Editar" class="p-button-outlined p-button-warning mr-2"></button>
   <button
     pButton
     pRipple
     type="button"
     label="Excluir"
-    class="p-button-outlined p-button-danger mt-2"
+    class="p-button-outlined p-button-danger ml-2"
     (click)="dialogExclusao(usuario.id)"
   ></button>
 </div>
 <div class="card">
-  <div class="justify-content-center">
+  <div class=" flex justify-content-center align-content-center align-items-center ">
     <p-card
       header="Bem vindo!"
       subheader="Seus dados"
-      [style]="{ width: '60%' }"
-      styleClass="styleClass"
+      [style]="{ width: '100%' }"
+      styleClass="styleClass" class=""
     >
       <div class="grid mt-2">
         <div class="col-6">Usuario: {{ usuario.email }}</div>
@@ -32,3 +32,4 @@
   header="Confirmação"
   icon="pi pi-exclamation-triangle"
 ></p-confirmDialog>
+<app-message></app-message>

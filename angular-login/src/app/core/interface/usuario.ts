@@ -5,7 +5,8 @@ export interface IUsuario {
     roles: string,
     nome: string,
     datanasc: string,
-    cpf: string
+    cpf: string,
+    ativo: boolean
 }
 
 

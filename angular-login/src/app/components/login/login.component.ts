@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { IUsuario } from 'src/app/core/interface/usuario';
-import { HidenavbarService } from 'src/app/core/service/hidenavbar.service';
 import { LoginService } from 'src/app/core/service/login.service';
 import {
   Informacao,
@@ -30,7 +29,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialogService: DialogService,
     private message: InformacaoService,
-    private navbar: HidenavbarService
   ) {}
   display = false;
 
@@ -42,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public login() {
     this.loading = true;
-    this.loginService.login(this.usuario).subscribe(
+    this.loginService.login(this.usuario).toPromise().then(
       (data) => {
         if (data) {
           this.loading = false;
@@ -51,17 +49,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 
           this.usuarioService
             .usuarioLogado(this.usuario)
-            .subscribe((usuario) => {
-              this.usuario = usuario;
-              sessionStorage.setItem('usuario', `${usuario.id}`);
-              this.routerDados();
+            .toPromise().then(usuario => {
+              if(usuario?.ativo) {
+                this.usuario = usuario;
+                sessionStorage.setItem('usuario', `${usuario.id}`);
+                this.routerDados();
+              } else {
+                this.message.setData(this.dadosToast());
+              }
             });
-
-            this.navbar.setLoginStatus();
         }
       },
       (err) => {
         this.loading = false;
+        this.message.setData(this.dadosToast(err.status, err.statusText, 'Erro ao entrar'))
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -85,7 +86,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  dadosToast(code: number, codeText: string, tipo: string): Informacao {
+  dadosToast(code?: number, codeText?: string, tipo?: string): Informacao {
     const info = { code, codeText, tipo } as Informacao;
     return info;
   }

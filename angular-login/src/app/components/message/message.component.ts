@@ -22,14 +22,16 @@ export class MessageComponent implements OnInit {
   }
 
   tipos() {
-    if(this.dados.code >=200 && this.dados.code <=202){
+    if(this.dados.code! >=200 && this.dados.code! <=202){
       this.messageService.add({severity:'success', summary: 'Sucesso', detail: `${this.dados.tipo} realizada com Sucesso!`, key: 'info'});
     }
-    else if (this.dados.code >=400 && this.dados.code <=499){
-      this.messageService.add({severity:'warning', summary: 'Alerta', detail: `${this.dados.tipo}: Dados em falta.`, key: 'info'});
+    else if (this.dados.code! >=400 && this.dados.code! <=499){
+      this.messageService.add({severity:'warn', summary: 'Aviso', detail: `${this.dados.tipo}: Verifique novamente as informações.`, key: 'info'});
     }
-    else if (this.dados.code>=500 && this.dados.code<=599){
+    else if (this.dados.code! >=500 && this.dados.code! <=599){
         this.messageService.add({severity:'error', summary: 'Error', detail: `Erro ao realizar a ${this.dados.tipo}, por favor verifique novamente!`, key: 'info'});
+    } else if (this.dados.code === undefined){
+      this.messageService.add({severity:'warn', summary: 'Aviso', detail: `Sua conta está inativa, contate o suporte para ativá-la novamete.`, key: 'info'});
     }
   }
 }

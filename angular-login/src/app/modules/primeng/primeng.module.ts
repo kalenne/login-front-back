@@ -21,6 +21,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {InputMaskModule} from 'primeng/inputmask';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import {FieldsetModule} from 'primeng/fieldset';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {MessageModule} from 'primeng/message';
     ConfirmDialogModule,
     InputMaskModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    FieldsetModule
   ],
   providers: [
     MessageService,

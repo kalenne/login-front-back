@@ -8,15 +8,15 @@ Injectable({
   providedIn: 'root'
 })
 
-export interface Informacao {
-  code: number,
-  codeText:string,
-  tipo: string
+export interface Informacao  {
+  code?: number,
+  codeText?:string,
+  tipo?: string
 }
 
 export class InformacaoService {
 
-  private data = new BehaviorSubject<Informacao>({code: 0, codeText:'', tipo: ''});
+  private data = new BehaviorSubject<Informacao>({});
 
   constructor() { }
 

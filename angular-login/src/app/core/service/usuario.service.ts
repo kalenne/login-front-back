@@ -23,7 +23,6 @@ export class UsuarioService {
   }
 
   cadastrarUsuarios(usuario: IUsuario){
-    console.log (usuario);
     return this.http.post<IUsuario>(`${this.api}/salvar`, usuario, {observe: 'response'});
   }
 

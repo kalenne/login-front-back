@@ -42,11 +42,12 @@ export class AdminComponent implements OnInit {
 
   listarUsuarios() {
     let id = sessionStorage.getItem('usuario');
-    this.usuarioService.listarUsuarios(Number(id)).subscribe((data) => {
-      this.usuarios = data;
-    }, (err) => {
-      this.router.navigate(['/login']);
-    });
+    this.usuarioService.listarUsuarios(Number(id)).toPromise().then(
+      (response)=> this.usuarios = response,
+      (err) => {
+        this.router.navigate(['/login']);
+        this.message.setData(this.dadosToast(err.status, err.statusText, 'Dados'))
+      });
   }
 
   exportPDF() {
@@ -56,9 +57,9 @@ export class AdminComponent implements OnInit {
   deletarUsuario(id: number) {
     this.usuarioService
       .deletarUsuario(id)
-      .subscribe((data) => {
+      .toPromise().then((data) => {
         this.listarUsuarios();
-        this.message.setData(this.dadosToast(data.status, data.statusText, 'Exclusão'));
+        this.message.setData(this.dadosToast(data?.status, data?.statusText, 'Exclusão'));
       });
   }
 
@@ -67,7 +68,8 @@ export class AdminComponent implements OnInit {
 
     let ref = this.dialogService.open(CadastroComponent, {
       header: operacao === 'create' ? 'Cadastro' : 'Editar Informações',
-      width: '60%',
+      width: '55%',
+      height: '130%',
       data: {
         operacao: operacao,
         admin: 'admin',
@@ -102,15 +104,15 @@ export class AdminComponent implements OnInit {
     });
 
     ref.onClose.subscribe((data) => {
-      this.listarUsuarios();
+      if (data) {
+        this.listarUsuarios();
+        this.message.setData(this.dadosToast(data.status, data.statusText, "Restauração"));
+      }
     });
   }
 
-  dadosToast(code: number, codeText:string, tipo: string): Informacao {
+  dadosToast(code?: number, codeText?:string, tipo?: string): Informacao {
     const info = {code, codeText, tipo} as Informacao;
     return info;
   }
-
-
-
 }

@@ -11,6 +11,9 @@ import { UsuarioService } from 'src/app/core/service/usuario.service';
 export class RestaurarComponent implements OnInit {
 
   usuarios: IUsuario[] = [];
+
+  searchText:string = '';
+
   constructor(private usuarioService: UsuarioService, private ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
@@ -23,8 +26,9 @@ export class RestaurarComponent implements OnInit {
   }
 
   dadosModal(id: number){
-    this.usuarioService.restaurarUsuario(id).subscribe(dados => {
+    this.usuarioService.restaurarUsuario(id).toPromise().then(response => {
       this.restaurarUsuario();
+      this.ref.close(response);
     });
   }
 
