@@ -20,10 +20,5 @@ public class HandlerException {
 		return new ResponseEntity<ResponseException>(respoException, HttpStatus.NOT_FOUND);
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public final ResponseEntity<ResponseException> handlerDefault(Exception ex, WebRequest request){
-		FormatLocalDateTime flDate = new FormatLocalDateTime(LocalDateTime.now());
-		ResponseException respoException = new ResponseException(flDate.formatDateTime(), ex.getMessage(), request.getDescription(false));
-		return new ResponseEntity<ResponseException>(respoException, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+	
 }

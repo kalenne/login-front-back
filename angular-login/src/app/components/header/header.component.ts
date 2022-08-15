@@ -11,19 +11,23 @@ export class HeaderComponent implements OnInit, DoCheck {
   itens: MenuItem[] = [];
   label: string = 'Login';
 
+  loginStatus: boolean = false;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.itens = [
-      {
-      },
     ];
+
   }
 
   ngDoCheck(): void {
     if(sessionStorage.getItem("logout") === 'Logout'){
       this.label = 'Logout';
     }
+
+    this.loginStatus = sessionStorage.getItem('usuario') ? true : false;
+
   }
 
   login() {
@@ -31,6 +35,8 @@ export class HeaderComponent implements OnInit, DoCheck {
     if (sessionStorage.getItem("logout") === 'Logout'){
       sessionStorage.clear();
       this.label = 'Login';
+      this.loginStatus = false;
     }
   }
+
 }
