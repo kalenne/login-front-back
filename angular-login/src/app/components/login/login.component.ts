@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     sessionStorage.clear();
-    this.message.setData({});
-
   }
 
   ngOnDestroy(): void {}
@@ -57,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 sessionStorage.setItem('usuario', `${usuario.id}`);
                 this.routerDados();
               } else {
-                this.message.setData(this.dadosToast(401));
+                this.message.setData(this.dadosToast(undefined, 'inativo'));
               }
             });
         }
@@ -76,7 +74,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   routerDados() {
-    this.messageService.clear();
     if (sessionStorage.getItem('token')) {
       if (this.usuario.roles === 'ADMIN') {
         this.router.navigate(['/usuario/admin']);
