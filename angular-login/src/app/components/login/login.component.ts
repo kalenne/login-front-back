@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 sessionStorage.setItem('usuario', `${usuario.id}`);
                 this.routerDados();
               } else {
-                this.message.setData(this.dadosToast());
+                this.message.setData(this.dadosToast(undefined, 'inativo'));
               }
             });
         }
