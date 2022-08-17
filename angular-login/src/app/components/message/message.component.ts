@@ -30,8 +30,6 @@ export class MessageComponent implements OnInit {
     });
   }
 
-
-
   tipos() {
     if (this.dados?.code! >= 200 && this.dados?.code! <= 202) {
       this.messageService.add({
@@ -40,7 +38,7 @@ export class MessageComponent implements OnInit {
         detail: `${this.dados?.tipo} realizada com Sucesso!`,
         key: 'info',
       });
-    } else if (this.dados?.code! >= 400 && this.dados?.code! <= 499 && this.dados.code != 401) {
+    } else if (this.dados?.code! >= 400 && this.dados?.code! <= 499 ) {
       this.messageService.add({
         severity: 'warn',
         summary: 'Aviso',
@@ -54,7 +52,7 @@ export class MessageComponent implements OnInit {
         detail: `Erro ao realizar a ${this.dados?.tipo}, por favor verifique novamente!`,
         key: 'info',
       });
-    } else if (this.dados?.code === 401) {
+    } else if (this.dados?.codeText === 'inativo') {
       this.messageService.add({
         severity: 'warn',
         summary: 'Aviso',
@@ -62,9 +60,5 @@ export class MessageComponent implements OnInit {
         key: 'info',
       });
     }
-  }
-
-  setDados(response: Informacao) {
-    this.dados = response;
   }
 }
