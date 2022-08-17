@@ -27,7 +27,8 @@ export class AdminComponent implements OnInit {
     private dialogService: DialogService,
     private confirmationService: ConfirmationService,
     private message: InformacaoService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.columns = [
       { title: 'id', dataKey: 'id' },
