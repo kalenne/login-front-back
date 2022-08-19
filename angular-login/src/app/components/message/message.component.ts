@@ -1,7 +1,5 @@
-import { HttpStatusCode } from '@angular/common/http';
-import { Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Subscription, windowWhen } from 'rxjs';
 import {
   Informacao,
   InformacaoService,
