@@ -16,16 +16,16 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuRepo;
 	
-	private Usuario usuarioLogado;
+	public UsuarioService(UsuarioRepository usuRepo) {
+		this.usuRepo = usuRepo;
+	}
 	
-	 public UsuarioService(UsuarioRepository repository) {
-		 this.usuRepo = repository;
-	 }
+	private Usuario usuarioLogado;
 	 
 	 public Optional<Usuario> logado(Usuario usuarioLogado) {
 		return usuRepo.findByEmail(usuarioLogado.getEmail()).map(data -> {
 			this.usuarioLogado = data;
-			return this.usuarioLogado;
+			return data;
 		});
 	 }
 		
@@ -75,28 +75,31 @@ public class UsuarioService {
 		} catch (Exception e) {
 			throw new Exception("Erro ao salvar o usuario.");
 		}
+		
+	
+		
 	}
 	
-	public Optional<Usuario> editarUsuario(Usuario email)  throws Exception {
-		return usuRepo.findByEmail(email.getEmail())
+	public Optional<Usuario> editarUsuario(Usuario usuario)  throws Exception {
+		return usuRepo.findByEmail(usuario.getEmail())
 				.map(dados -> {
-					dados.setCpf(email.getCpf());
-					dados.setDatanasc(email.getDatanasc());
-					dados.setNome(email.getNome());
-					dados.setSenha(email.getSenha());
-					if(email.getRoles() == null) {
+					dados.setCpf(usuario.getCpf());
+					dados.setDatanasc(usuario.getDatanasc());
+					dados.setNome(usuario.getNome());
+					dados.setSenha(usuario.getSenha());
+					if(usuario.getRoles() == null) {
 						dados.setRoles(UserRoles.USER);
 					} else {
-						dados.setRoles(email.getRoles());
+						dados.setRoles(usuario.getRoles());
 					}
 					
 					return usuRepo.save(dados);
 				});
 	}
 	
-	public Optional<Usuario> resetUsuario(Usuario email)  throws Exception {
-		return usuRepo.findByEmail(email.getEmail()).map(data -> {
-			data.setSenha(email.getSenha());
+	public Optional<Usuario> resetUsuario(Usuario usuario)  throws Exception {
+		return usuRepo.findByEmail(usuario.getEmail()).map(data -> {
+			data.setSenha(usuario.getSenha());
 			return usuRepo.save(data);
 		});
 	}
@@ -116,7 +119,6 @@ public class UsuarioService {
 		} catch (Exception e) {
 			throw new Exception("Usuario invalido para a operacao");
 		}
-		
 	}
 	
 	public Optional<Usuario> restaurar(Integer id) throws Exception {
