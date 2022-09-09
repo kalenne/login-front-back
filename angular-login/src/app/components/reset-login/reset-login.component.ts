@@ -28,7 +28,12 @@ export class ResetLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.operacao = this.ddc.data.operacao;
+    this.getDdcData();
+  }
+
+  getDdcData() {
+    if(this.ddc.data)
+      this.operacao = this.ddc.data.operacao;
   }
 
   salvarDados() {

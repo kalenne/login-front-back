@@ -11,11 +11,12 @@ import { IUsuario } from '../interface/usuario';
 })
 export class LoginService {
 
-  api = `${environment.api}/login`
+  api = `${environment.api}/login`;
   constructor(private http:HttpClient) { }
 
   public login (usuario: IUsuario){
     return this.http.post(this.api, JSON.stringify(usuario), {responseType: 'text'}).pipe(
     );
+
   }
 }

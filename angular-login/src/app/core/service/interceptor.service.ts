@@ -7,8 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class Interceptor implements HttpInterceptor {
 
-  constructor() { }
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const token = sessionStorage.getItem("token");

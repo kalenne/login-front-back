@@ -12,7 +12,6 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordfilterPipe } from './core/pipes/passwordfilter.pipe';
-import { UploadDadosComponent } from './pages/upload-dados/upload-dados.component';
 import { PerfilComponent } from './pages/usuarios/perfil/perfil.component';
 import { AdminComponent } from './pages/usuarios/admin/admin.component';
 import { CpfPipe } from './core/pipes/cpf.pipe';
@@ -32,7 +31,6 @@ import { SearchfilterPipe } from './core/pipes/searchfilter.pipe';
     CadastroComponent,
     HeaderComponent,
     PasswordfilterPipe,
-    UploadDadosComponent,
     PerfilComponent,
     AdminComponent,
     CpfPipe,

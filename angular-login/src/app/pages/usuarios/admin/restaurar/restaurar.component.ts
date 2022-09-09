@@ -13,6 +13,7 @@ export class RestaurarComponent implements OnInit {
   usuarios: IUsuario[] = [];
 
   searchText:string = '';
+  id: string | null = '';
 
   constructor(private usuarioService: UsuarioService, private ref: DynamicDialogRef) { }
 
@@ -21,12 +22,12 @@ export class RestaurarComponent implements OnInit {
   }
 
   restaurarUsuario(){
-    let id = sessionStorage.getItem('usuario');
-    this.usuarioService.listaRestaurar(Number(id)).subscribe(dados => this.usuarios = dados)
+    this.id = sessionStorage.getItem('usuario');
+    this.usuarioService.listaRestaurar(Number(this.id)).subscribe(dados => this.usuarios = dados)
   }
 
   dadosModal(id: number){
-    this.usuarioService.restaurarUsuario(id).toPromise().then(response => {
+    this.usuarioService.restaurarUsuario(id).subscribe(response => {
       this.restaurarUsuario();
       this.ref.close(response);
     });

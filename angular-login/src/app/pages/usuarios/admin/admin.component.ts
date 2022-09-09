@@ -5,7 +5,6 @@ import { CadastroComponent } from 'src/app/components/cadastro/cadastro.componen
 import { IUsuario } from 'src/app/core/interface/usuario';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { Informacao, InformacaoService } from 'src/app/core/service/message.service';
-import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { RestaurarComponent } from './restaurar/restaurar.component';
 import { Router } from '@angular/router';
 @Component({
@@ -21,6 +20,7 @@ export class AdminComponent implements OnInit {
   loading: boolean = true;
 
   searchText: string = '';
+  id: string | null = '';
 
   constructor(
     private usuarioService: UsuarioService,
@@ -28,7 +28,6 @@ export class AdminComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private message: InformacaoService,
     private router: Router,
-    private messageService: MessageService
   ) {
     this.columns = [
       { title: 'id', dataKey: 'id' },
@@ -42,8 +41,8 @@ export class AdminComponent implements OnInit {
   }
 
   listarUsuarios() {
-    let id = sessionStorage.getItem('usuario');
-    this.usuarioService.listarUsuarios(Number(id)).toPromise().then(
+    this.id = sessionStorage.getItem('usuario');
+    this.usuarioService.listarUsuarios(Number(this.id)).subscribe(
       (response)=> this.usuarios = response,
       (err) => {
         this.router.navigate(['/login']);
@@ -58,9 +57,9 @@ export class AdminComponent implements OnInit {
   deletarUsuario(id: number) {
     this.usuarioService
       .deletarUsuario(id)
-      .toPromise().then((data) => {
+      .subscribe((data) => {
         this.listarUsuarios();
-        this.message.setData(this.dadosToast(data?.status, data?.statusText, 'Exclusão'));
+        this.message.setData(this.dadosToast(data.status, data.statusText, 'Exclusão'));
       });
   }
 
@@ -77,7 +76,7 @@ export class AdminComponent implements OnInit {
         usuario: usuario,
       },
     });
-    ref.onClose.subscribe((data) => {
+    ref.onClose.subscribe((data:any) => {
       if(data){
         this.listarUsuarios();
         this.message.setData(this.dadosToast(data.status, data.statusText, header));
@@ -92,10 +91,6 @@ export class AdminComponent implements OnInit {
         this.deletarUsuario(id);
       },
     });
-  }
-
-  reload(){
-    window.location.reload();
   }
 
   restaurarModal() {

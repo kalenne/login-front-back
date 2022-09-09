@@ -14,6 +14,7 @@ import { UsuarioService } from 'src/app/core/service/usuario.service';
 })
 export class PerfilComponent implements OnInit {
   usuario = {} as IUsuario;
+  id: string | null= '';
 
   constructor(
     private usuarioService: UsuarioService,
@@ -28,8 +29,8 @@ export class PerfilComponent implements OnInit {
   }
 
   listarUsuarios() {
-    let id = sessionStorage.getItem('usuario');
-    this.usuarioService.listarUsuarios(Number(id)).toPromise().then((data: any) => {
+    this.id = sessionStorage.getItem('usuario');
+    this.usuarioService.listarUsuarios(Number(this.id)).subscribe((data: any) => {
       this.usuario = data;
     }, (err) => {
       this.router.navigate(['/login']);

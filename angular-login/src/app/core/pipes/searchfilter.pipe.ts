@@ -7,11 +7,15 @@ export class SearchfilterPipe implements PipeTransform {
 
   transform(usuarios: any[], searchText: string, tipo: string): any[] {
 
-    if (!usuarios) {
+    if (!usuarios.length) {
       return [];
     }
 
     if (!searchText) {
+      return usuarios;
+    }
+
+    if(!tipo){
       return usuarios;
     }
 
