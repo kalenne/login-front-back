@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { error } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
-import { retry } from 'rxjs';
-import { AppConstants } from 'src/app/app-constants';
 import { environment } from 'src/environments/environment';
 import { IUsuario } from '../interface/usuario';
 

@@ -1,6 +1,6 @@
 <form [formGroup]="formGroup">
   <div class="card p-fluid">
-    <div *ngIf="admin == 'admin'" class="field grid">
+    <div *ngIf="admin === 'admin'" class="field grid">
       <label class="col-12 mb-2 ml-4">Tipo de Usuario</label>
       <div class="col-12 md:col-10 ml-4">
         <p-dropdown [options]="roles" formControlName="roles" placeholder="Selecione"></p-dropdown>

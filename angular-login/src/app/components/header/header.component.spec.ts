@@ -53,6 +53,8 @@ fdescribe('HeaderComponent', () => {
     const router = TestBed.inject(Router);
     const spy = spyOn(router, 'navigate');
 
+    sessionStorage.setItem('usuario', 'teste');
+
     component.login();
     expect(spy).toHaveBeenCalledWith(['/login']);
     expect(component.loginStatus).toBeFalse();

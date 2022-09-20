@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit {
   usuarios = [] as IUsuario[];
   usuarioAtivo = Number (sessionStorage.getItem('usuario'));
-
   columns: any[] = [];
   loading: boolean = true;
 
@@ -65,7 +64,6 @@ export class AdminComponent implements OnInit {
 
   dadosModal(operacao: string, usuario?: IUsuario) {
     let header = operacao === 'create' ? 'Criação' : 'Edição';
-
     let ref = this.dialogService.open(CadastroComponent, {
       header: operacao === 'create' ? 'Cadastro' : 'Editar Informações',
       width: '55%',
@@ -76,6 +74,7 @@ export class AdminComponent implements OnInit {
         usuario: usuario,
       },
     });
+
     ref.onClose.subscribe((data:any) => {
       if(data){
         this.listarUsuarios();

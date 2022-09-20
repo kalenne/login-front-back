@@ -16,7 +16,7 @@ import { ResetLoginComponent } from '../reset-login/reset-login.component';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   usuario = {} as IUsuario;
   token:string = '';
   loading = false;
@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     sessionStorage.clear();
   }
 
-  ngOnDestroy(): void {}
 
   public login() {
     this.loading = true;

@@ -9,6 +9,7 @@ import { PerfilComponent } from './pages/usuarios/perfil/perfil.component';
 const routes: Routes = [
   {path: '', component:LoginComponent},
   {path: 'login', component:LoginComponent},
+  {path: 'home', component:HomeComponent},
   {path: 'cadastrar', component:CadastroComponent},
   {path: 'usuario/admin', component: AdminComponent},
   {path: 'usuario/usuario', component: PerfilComponent}

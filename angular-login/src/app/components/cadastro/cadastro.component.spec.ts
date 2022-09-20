@@ -72,8 +72,8 @@ fdescribe('CadastroComponent', () => {
     infoService = TestBed.inject(InformacaoService);
     spyOn(usuServ, 'roles').and.callFake(()=> of(role));
 
-    fixture.detectChanges();
     component.operacao = 'update';
+    fixture.detectChanges();
   });
 
   it('should create', () => {

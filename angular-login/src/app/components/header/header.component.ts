@@ -17,6 +17,12 @@ export class HeaderComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.itens = [
+      {
+        label: 'Dashboard', routerLink: '/home',
+      },
+      {
+        label: 'Usuario', routerLink: '/usuario/admin'
+      }
     ];
 
   }

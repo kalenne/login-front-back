@@ -38,11 +38,12 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getDynamicData();
+
     if (this.operacao === 'update') {
       this.editarUsuario();
     }
 
-    this.getDynamicData();
     this.getRoles();
 
   }
