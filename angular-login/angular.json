@@ -35,7 +35,7 @@
 
             ],
             "scripts": [
-
+              "node_modules/chart.js/dist/chart.js"
             ]
           },
           "configurations": {
@@ -103,11 +103,24 @@
             "styles": [
               "src/styles.css"
             ],
+            "codeCoverage": true,
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
-  "defaultProject": "est-login"
+  "defaultProject": "est-login",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

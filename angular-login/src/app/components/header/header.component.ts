@@ -9,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class HeaderComponent implements OnInit, DoCheck {
   itens: MenuItem[] = [];
-  label: string = 'Login';
+  label: string = 'Logout';
 
   loginStatus: boolean = false;
 
@@ -17,24 +17,24 @@ export class HeaderComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.itens = [
+      {
+        label: 'Dashboard', routerLink: '/home',
+      },
+      {
+        label: 'Usuario', routerLink: '/usuario/admin'
+      }
     ];
 
   }
 
   ngDoCheck(): void {
-    if(sessionStorage.getItem("logout") === 'Logout'){
-      this.label = 'Logout';
-    }
-
     this.loginStatus = sessionStorage.getItem('usuario') ? true : false;
-
   }
 
   login() {
     this.router.navigate(['/login']);
-    if (sessionStorage.getItem("logout") === 'Logout'){
+    if (this.loginStatus === true){
       sessionStorage.clear();
-      this.label = 'Login';
       this.loginStatus = false;
     }
   }

@@ -46,6 +46,10 @@ export class UsuarioService {
     return this.http.get<any>(`${this.api}/roles`);
   }
 
+  quantidadeRoles() {
+    return this.http.get<any>(`${this.api}/quantidaderoles`);
+  }
+
   resetSenha(usuario: IUsuario) {
     return this.http.put<IUsuario>(`${this.api}/resetsenha`, usuario, {observe:'response'});
   }

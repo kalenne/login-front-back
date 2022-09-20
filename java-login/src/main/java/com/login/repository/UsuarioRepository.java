@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.login.model.Usuario;
+import com.login.utils.UserRoles;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
@@ -19,5 +20,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	
 	@Query("SELECT u FROM usuario u WHERE u.ativo = false")
 	public List<Usuario> findByAtivoFalse();
+	
+	@Query ("select roles, count(roles) from usuario where ativo=true group by roles")
+	public List<Object> quantidadeRoles();
 	
 }

@@ -6,10 +6,11 @@ import { cpf } from 'cpf-cnpj-validator';
 })
 export class CpfPipe implements PipeTransform {
 
-  transform(value: any): any {
-    if(value){
+  transform(value: string): string {
+    if(value.length === 11 && Number(value)){
       return cpf.format(value);
     }
+    return '';
   }
 }
 

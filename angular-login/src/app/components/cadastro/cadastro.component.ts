@@ -24,7 +24,6 @@ export class CadastroComponent implements OnInit {
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
     private ddc: DynamicDialogConfig,
-    private messageService: MessageService,
     private ref: DynamicDialogRef,
     private message: InformacaoService
   ) {
@@ -39,12 +38,20 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.operacao = this.ddc.data.operacao;
-    this.admin = this.ddc.data.admin;
-    this.getRoles();
+    this.getDynamicData();
 
     if (this.operacao === 'update') {
       this.editarUsuario();
+    }
+
+    this.getRoles();
+
+  }
+
+  getDynamicData() {
+    if (this.ddc.data) {
+      this.operacao = this.ddc.data.operacao;
+      this.admin = this.ddc.data.admin;
     }
   }
 
@@ -91,11 +98,13 @@ export class CadastroComponent implements OnInit {
 
 
   editarUsuario() {
-    this.formGroup.get('email')?.patchValue(this.ddc.data.usuario.email);
-    this.formGroup.get('roles')?.patchValue(this.ddc.data.usuario.roles);
-    this.formGroup.get('nome')?.patchValue(this.ddc.data.usuario.nome);
-    this.formGroup.get('datanasc')?.patchValue(this.ddc.data.usuario.datanasc);
-    this.formGroup.get('cpf')?.patchValue(this.ddc.data.usuario.cpf);
+    if(this.ddc.data) {
+      this.formGroup.get('email')?.patchValue(this.ddc.data.usuario.email);
+      this.formGroup.get('roles')?.patchValue(this.ddc.data.usuario.roles);
+      this.formGroup.get('nome')?.patchValue(this.ddc.data.usuario.nome);
+      this.formGroup.get('datanasc')?.patchValue(this.ddc.data.usuario.datanasc);
+      this.formGroup.get('cpf')?.patchValue(this.ddc.data.usuario.cpf);
+    }
 
   }
 

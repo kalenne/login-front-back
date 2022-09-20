@@ -5,11 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PasswordfilterPipe implements PipeTransform {
 
-  transform(value: String): any {
+  transform(value: String): string {
 
     if(value){
-      return "*******";
+      return "*".repeat(value.length)
     }
+    return '';
   }
 
 }

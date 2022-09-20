@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { IUsuario } from 'src/app/core/interface/usuario';
 import { LoginService } from 'src/app/core/service/login.service';
@@ -17,15 +16,14 @@ import { ResetLoginComponent } from '../reset-login/reset-login.component';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   usuario = {} as IUsuario;
-
+  token:string = '';
   loading = false;
 
   constructor(
     private usuarioService: UsuarioService,
     private loginService: LoginService,
-    private messageService: MessageService,
     private router: Router,
     public dialogService: DialogService,
     private message: InformacaoService,
@@ -36,45 +34,27 @@ export class LoginComponent implements OnInit, OnDestroy {
     sessionStorage.clear();
   }
 
-  ngOnDestroy(): void {}
 
   public login() {
     this.loading = true;
-    this.loginService.login(this.usuario).toPromise().then(
+    this.loginService.login(this.usuario).subscribe(
       (data) => {
         if (data) {
           this.loading = false;
-          let token = data;
-          sessionStorage.setItem('token', token);
-
-          this.usuarioService
-            .usuarioLogado(this.usuario)
-            .toPromise().then(usuario => {
-              if(usuario?.ativo) {
-                this.usuario = usuario;
-                sessionStorage.setItem('usuario', `${usuario.id}`);
-                this.routerDados();
-              } else {
-                this.message.setData(this.dadosToast(undefined, 'inativo'));
-              }
-            });
+          this.token = data;
+          sessionStorage.setItem('token', this.token);
+          this.usuariosLogado();
         }
       },
       (err) => {
         this.loading = false;
         this.message.setData(this.dadosToast(err.status, err.statusText, 'Erro ao entrar'))
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Usuário Inválido!',
-          key: 'error',
-        });
       }
     );
   }
 
   routerDados() {
-    if (sessionStorage.getItem('token')) {
+    if (this.token) {
       if (this.usuario.roles === 'ADMIN') {
         this.router.navigate(['/usuario/admin']);
       }
@@ -121,5 +101,19 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.dadosToast(data.status, data.statusText, 'Atualização')
       );
     });
+  }
+
+  usuariosLogado() {
+    this.usuarioService
+            .usuarioLogado(this.usuario)
+            .subscribe(usuario => {
+              if(usuario.ativo) {
+                this.usuario = usuario;
+                sessionStorage.setItem('usuario', `${usuario.id}`);
+                this.routerDados();
+              } else {
+                this.message.setData(this.dadosToast(undefined, 'inativo'));
+              }
+            });
   }
 }

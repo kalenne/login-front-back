@@ -1,5 +1,6 @@
 package com.login;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,6 +60,12 @@ public class UsuarioServiceTeste {
 	@Test(expected = Exception.class)
 	public void testeSalvarSemDados() throws Exception {
 		when(usuarioService.salvarUsuarios(null)).thenThrow(Exception.class);
+	}
+	
+	@Test
+	public void estaFuncionado() throws Exception {
+		Boolean rosa = true;
+		assertTrue(rosa);
 	}
 
 	@Test

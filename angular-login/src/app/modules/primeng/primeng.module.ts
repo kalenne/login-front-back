@@ -22,6 +22,7 @@ import {InputMaskModule} from 'primeng/inputmask';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {FieldsetModule} from 'primeng/fieldset';
+import {ChartModule} from 'primeng/chart';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {FieldsetModule} from 'primeng/fieldset';
     InputMaskModule,
     MessagesModule,
     MessageModule,
-    FieldsetModule
+    FieldsetModule,
+    ChartModule
   ],
   providers: [
     MessageService,

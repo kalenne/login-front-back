@@ -1,5 +1,6 @@
 package com.login.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class UsuarioService {
 				 } else if (dados.isAtivo() == true) {
 					 return dados;
 				 } else {
-					 return null;
+					 throw new NotFoundException("Usuario nao encontrado.");
 				 }
 			 });
 			
@@ -64,7 +65,7 @@ public class UsuarioService {
 	 }
 	
 	
-	public Usuario salvarUsuarios(Usuario usuario) throws Exception {
+	public Usuario salvarUsuarios(Usuario usuario) throws Exception  {
 		try {			
 			if(usuario.getRoles() == null) {
 				usuario.setRoles(UserRoles.USER);
@@ -134,5 +135,9 @@ public class UsuarioService {
 	
 	public UserRoles[] roles () {
 		return UserRoles.values();
+	}
+	
+	public List<Object> quantidadeRoles() {
+		return usuRepo.quantidadeRoles();
 	}
 }

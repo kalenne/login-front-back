@@ -1,5 +1,6 @@
 package com.login.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,13 @@ public class UsuarioController {
 		UserRoles[] roles = usuServ.roles();
 		return new ResponseEntity<UserRoles[]>(roles, HttpStatus.OK);
 	}
+	
+	@GetMapping("/quantidaderoles")
+	public ResponseEntity<List<Object>> quantidadeRoles (){
+		List<Object> roles = usuServ.quantidadeRoles();
+		return new ResponseEntity<List<Object>>(roles, HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("/logado")
 	public ResponseEntity<Optional<Usuario>> usuarioLogado (@RequestBody Usuario usuario){
